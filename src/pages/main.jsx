@@ -1,7 +1,12 @@
 import React from 'react';
+import Map from '../components/Map';
 
 function index() {
-  return <></>;
+  return (
+    <>
+      <Map />
+    </>
+  );
 }
 
 export default index;
