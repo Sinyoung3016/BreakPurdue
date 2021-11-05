@@ -1,13 +1,9 @@
 import React from 'react';
-import * as Style from './AppStyle';
+import IndexPage from './pages/main';
 
+// Routing필요 시 라이브러리 추가설치 필요
 function App() {
-  return (
-    <div>
-      <Style.Title>Welcome to React App</Style.Title>
-      <h3>Date : {new Date().toDateString()}</h3>
-    </div>
-  );
+  return <IndexPage />;
 }
 
 export default App;
