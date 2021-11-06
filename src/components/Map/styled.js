@@ -1,5 +1,10 @@
 import styled from '@emotion/styled';
 
+export const Container = styled.div`
+  position: relative;
+  height: calc(100% - 8rem);
+`;
+
 export const MapContainer = styled.div`
   position: absolute;
   bottom: 0 !important;

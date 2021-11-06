@@ -35,10 +35,12 @@ function Map({ children, getMap }) {
   }, []);
 
   return (
-    <Style.MapContainer ref={mapRef}>
-      <Style.SearchBox id="search-bar" />
-      {children}
-    </Style.MapContainer>
+    <Style.Container>
+      <Style.MapContainer ref={mapRef}>
+        <Style.SearchBox id="search-bar" />
+        {children}
+      </Style.MapContainer>
+    </Style.Container>
   );
 }
 
