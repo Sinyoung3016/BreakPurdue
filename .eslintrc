@@ -16,6 +16,7 @@
     "react/prop-types": 0,
     "no-unused-vars": 0,
     "import/extensions": 0,
+    "react-hooks/exhaustive-deps": 0,
     "react/jsx-filename-extension": 0,
     "import/prefer-default-export": 0,
     "react/jsx-props-no-spreading": [1, { "custom": "ignore" }]
