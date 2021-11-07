@@ -17,6 +17,8 @@ export const Title = styled.h2`
   margin-bottom: 1.5rem;
   font-size: 2.5rem;
   font-family: 'Comfortaa', cursive;
+  cursor: pointer;
+  user-select: none;
 `;
 
 export const Input = styled.input`
