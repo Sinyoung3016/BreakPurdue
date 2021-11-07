@@ -11,7 +11,7 @@ const LNG = -86.89871737888747;
 const LAT = 40.41866254968954;
 const ZOOM = 12;
 
-function Map({ children, getMap }) {
+function Map({ children, getMap, clickSearchedMarker }) {
   const mapRef = useRef();
 
   useEffect(() => {
@@ -25,7 +25,16 @@ function Map({ children, getMap }) {
     const geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       placeholder: '검색 후 핀을 누르세요',
+      marker: false,
       mapboxgl,
+    });
+
+    geocoder.on('result', (event) => {
+      new mapboxgl.Marker()
+        .setLngLat(event.result.center)
+        .addTo(map)
+        .getElement()
+        .addEventListener('click', () => {});
     });
 
     map.on('load', () => {
