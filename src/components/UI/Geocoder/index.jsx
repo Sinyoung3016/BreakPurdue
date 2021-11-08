@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import useGoogleAutocomplete from 'react-google-autocomplete/lib/usePlacesAutocompleteService';
 import Overlay from '../../Layout/Overlay';
+import SearchIcon from '../Icon/Search';
 import addressToMarker from './geocoder';
 import * as Style from './styled';
 
 function Geocoder({ map }) {
   const [value, setValue] = useState('');
-  const [searchedMarker, setSearchedMarker] = useState(undefined);
+  const [searchedMarkers, setSearchedMarkers] = useState([]);
   const { placePredictions, getPlacePredictions, isPlacePredictionsLoading } = useGoogleAutocomplete({
     apiKey: process.env.GOOGLE_MAP_KEY,
     language: 'en',
@@ -16,12 +17,40 @@ function Geocoder({ map }) {
     },
   });
 
+  const resetMarker = (markers) => {
+    markers.forEach((marker) => {
+      marker.remove();
+    });
+    setSearchedMarkers([]);
+  };
+
+  const drawMarkerToMap = (markers) => {
+    resetMarker(searchedMarkers);
+    markers.forEach((marker) => {
+      marker.addTo(map);
+      marker.getElement().addEventListener('click', () => {
+        resetMarker(markers);
+      });
+    });
+    setSearchedMarkers(markers);
+  };
+
   const clickPlacePrediction = async (place) => {
     setValue(place.description);
+    const marker = await addressToMarker(place.description, map, true);
     getPlacePredictions({ input: '' });
-    const marker = await addressToMarker(place.description, map);
-    if (searchedMarker) searchedMarker.remove();
-    setSearchedMarker(marker);
+    drawMarkerToMap([marker]);
+  };
+  const handleSearch = async (event) => {
+    event.preventDefault();
+    const markers = await Promise.all(
+      placePredictions.map((place) => {
+        const marker = addressToMarker(place.description, map, false);
+        return marker;
+      }),
+    );
+    drawMarkerToMap(markers);
+    getPlacePredictions({ input: '' });
   };
 
   const clickOverlay = () => {
@@ -30,7 +59,7 @@ function Geocoder({ map }) {
 
   return (
     <Overlay clickOverlay={clickOverlay} active={placePredictions.length}>
-      <Style.Container>
+      <Style.Container onSubmit={handleSearch}>
         <Style.Input
           style={{ color: 'black' }}
           value={value}
@@ -40,6 +69,9 @@ function Geocoder({ map }) {
             setValue(evt.target.value);
           }}
         />
+        <Style.IconWrapper onClick={handleSearch}>
+          <SearchIcon />
+        </Style.IconWrapper>
         {!isPlacePredictionsLoading && !!placePredictions.length && (
           <Style.List>
             {placePredictions.map((place) => (
