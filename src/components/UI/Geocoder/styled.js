@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 export const Container = styled.div`
   position: absolute;
-  top: 12px;
+  top: 100px;
   right: 12px;
   width: 240px;
   height: 40px;
@@ -33,4 +33,5 @@ export const List = styled.ul`
 
 export const Item = styled.li`
   cursor: pointer;
+  font-size: 1.5rem;
 `;
