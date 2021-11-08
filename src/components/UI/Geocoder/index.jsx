@@ -17,7 +17,7 @@ function Geocoder({ map }) {
     },
   });
 
-  const resetMarker = (markers) => {
+  const resetSearchedMarkers = (markers) => {
     markers.forEach((marker) => {
       marker.remove();
     });
@@ -25,11 +25,11 @@ function Geocoder({ map }) {
   };
 
   const drawMarkerToMap = (markers) => {
-    resetMarker(searchedMarkers);
+    resetSearchedMarkers(searchedMarkers);
     markers.forEach((marker) => {
       marker.addTo(map);
       marker.getElement().addEventListener('click', () => {
-        resetMarker(markers);
+        resetSearchedMarkers(markers);
       });
     });
     setSearchedMarkers(markers);
@@ -41,6 +41,7 @@ function Geocoder({ map }) {
     getPlacePredictions({ input: '' });
     drawMarkerToMap([marker]);
   };
+
   const handleSearch = async (event) => {
     event.preventDefault();
     const markers = await Promise.all(
