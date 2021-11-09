@@ -5,7 +5,13 @@ import SearchIcon from '../Icon/Search';
 import addressToMarker from './geocoder';
 import * as Style from './styled';
 
-function Geocoder({ map }) {
+/**
+ *
+ * searchedMarkers
+ * marker : Mapbox.Marker
+ * address : string
+ */
+function Geocoder({ map, clickPlaceMarker }) {
   const [value, setValue] = useState('');
   const [searchedMarkers, setSearchedMarkers] = useState([]);
   const { placePredictions, getPlacePredictions, isPlacePredictionsLoading } = useGoogleAutocomplete({
@@ -19,7 +25,7 @@ function Geocoder({ map }) {
 
   const resetSearchedMarkers = (markers) => {
     markers.forEach((marker) => {
-      marker.remove();
+      marker.marker.remove();
     });
     setSearchedMarkers([]);
   };
@@ -27,8 +33,10 @@ function Geocoder({ map }) {
   const drawMarkerToMap = (markers) => {
     resetSearchedMarkers(searchedMarkers);
     markers.forEach((marker) => {
-      marker.addTo(map);
-      marker.getElement().addEventListener('click', () => {
+      marker.marker.addTo(map);
+      marker.marker.getElement().addEventListener('click', () => {
+        const lnglat = marker.marker.getLngLat();
+        clickPlaceMarker({ address: marker.address, lng: lnglat.lng, lat: lnglat.lat });
         resetSearchedMarkers(markers);
       });
     });
@@ -39,15 +47,15 @@ function Geocoder({ map }) {
     setValue(place.description);
     const marker = await addressToMarker(place.description, map, true);
     getPlacePredictions({ input: '' });
-    drawMarkerToMap([marker]);
+    drawMarkerToMap([{ marker, address: place.description }]);
   };
 
   const handleSearch = async (event) => {
     event.preventDefault();
     const markers = await Promise.all(
-      placePredictions.map((place) => {
-        const marker = addressToMarker(place.description, map, false);
-        return marker;
+      placePredictions.map(async (place) => {
+        const marker = await addressToMarker(place.description, map, false);
+        return { marker, address: place.description };
       }),
     );
     drawMarkerToMap(markers);
