@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Map from '../components/UI/Map';
 import Marker from '../components/UI/Marker';
+import Geocoder from '../components/UI/Geocoder';
 import Header from '../components/UI/Header';
 
 // TODO: remove
@@ -26,6 +27,7 @@ function Main() {
     <>
       <Header user={user} login={login} />
       <Map getMap={setMap}>
+        <Geocoder map={map} />
         <Marker map={map} markers={dummy} />
       </Map>
     </>
