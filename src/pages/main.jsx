@@ -3,6 +3,7 @@ import Map from '../components/UI/Map';
 import Marker from '../components/UI/Marker';
 import Geocoder from '../components/UI/Geocoder';
 import Header from '../components/UI/Header';
+import ModalModify from '../components/UI/ModalModify';
 
 // TODO: remove
 const dummy = [{ lng: -86.89871737888747, lat: 40.41866254968954 }];
@@ -25,6 +26,7 @@ function Main() {
 
   return (
     <>
+      <ModalModify />
       <Header user={user} login={login} />
       <Map getMap={setMap}>
         <Geocoder map={map} />
