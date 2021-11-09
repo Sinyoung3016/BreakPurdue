@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as Style from './styled';
 import ModalLayout from '../../Layout/ModalLayout';
-import { cities, spaces } from '../../common/data';
+import { cities, spaces } from '../../../common/data';
 
 function Tag({ text, selected, clickTag }) {
   return (
