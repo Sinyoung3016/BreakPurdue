@@ -11,15 +11,17 @@ function Tag({ text, selected, clickTag }) {
   );
 }
 
-function ModalModify({ address }) {
+function ModalModify({ record, closeModal, submitRecord }) {
   const [info, setInfo] = useState({
-    place: '',
-    address: '160 Tapawingo Dr, West Lafayette, IN 47906 미국',
-    date: '',
-    visitedNum: 1,
-    cityTag: '',
-    spaceTag: '',
-    images: [],
+    address: record.address,
+    place: record.place || '',
+    date: record.date || '',
+    visitedNum: record.visitedNum || 1,
+    cityTag: record.cityTag || '',
+    spaceTag: record.spaceTag || '',
+    images: record.images || [],
+    lng: record.lng,
+    lat: record.lat,
   });
 
   const changePlace = (event) => {
@@ -60,7 +62,7 @@ function ModalModify({ address }) {
   };
 
   return (
-    <ModalLayout>
+    <ModalLayout closeModal={closeModal}>
       <Style.Container>
         <Style.InfoList>
           <Style.InfoItem>
@@ -109,7 +111,7 @@ function ModalModify({ address }) {
             </Style.ImageList>
           </Style.InfoItem>
         </Style.InfoList>
-        <Style.SubmitButton>☁️✈️☁️</Style.SubmitButton>
+        <Style.SubmitButton onClick={() => submitRecord(info)}>☁️✈️☁️</Style.SubmitButton>
         <Style.DiscardButton>우리의 추억 버리기</Style.DiscardButton>
       </Style.Container>
     </ModalLayout>
