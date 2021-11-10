@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import IndexPage from './pages/main';
 import GlobalStyle from './style/GlobalStyle';
 
