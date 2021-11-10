@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore/lite';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseInit = {
   apiKey: process.env.FIREBASE_API_KEY,
