@@ -42,4 +42,14 @@ export const deleteRecord = async (recordID) => {
   await deleteDoc(doc(firestore, RECORDS, recordID));
   console.log('deleteRecord', recordID);
 };
+
+export const getComment = async (recordID) => {
+  try {
+    const commentSnapshot = await getDocs(collection(firestore, RECORDS, recordID, COMMENT));
+    const CommentList = commentSnapshot.docs.map((d) => d.data());
+    console.log('CommentList', CommentList);
+    return CommentList;
+  } catch (e) {
+    console.log('Error from getComment', e);
+  }
 };
