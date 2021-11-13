@@ -37,4 +37,9 @@ export const addNewRecord = async (cityTag, date, location, numOfVisit, place, p
   console.log('newRecord', newRecord.id);
   return newRecord.id;
 };
+
+export const deleteRecord = async (recordID) => {
+  await deleteDoc(doc(firestore, RECORDS, recordID));
+  console.log('deleteRecord', recordID);
+};
 };
