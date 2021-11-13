@@ -24,4 +24,17 @@ export const getRecordList = async () => {
     console.log('Error from getRecordList', e);
   }
 };
+
+export const addNewRecord = async (cityTag, date, location, numOfVisit, place, placeTag) => {
+  const newRecord = await addDoc(collection(firestore, RECORDS), {
+    cityTag: cityTag,
+    date: date,
+    location: location,
+    numOfVisit: numOfVisit,
+    place: place,
+    placeTag: placeTag,
+  });
+  console.log('newRecord', newRecord.id);
+  return newRecord.id;
+};
 };
