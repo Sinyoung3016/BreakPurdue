@@ -8,7 +8,7 @@ const COMMENT = 'comment';
  * Record 구조
  * number cityTag
  * string date
- * geopoint location
+ * geopoint location : [ 위도 , 경도 ]
  * number numOfVisit
  * string place : 제목
  * number placeTag
@@ -17,8 +17,8 @@ const COMMENT = 'comment';
 export const getRecordList = async () => {
   const recordsSnapshot = await getDocs(collection(firestore, RECORDS));
   try {
-    const recordList = recordsSnapshot.docs.map((d) => d.data());
-    console.log('recordList', recordList[0]);
+    const recordList = recordsSnapshot.docs.map((d) => ({ ...d.data(), id: d.id }));
+    console.log('recordList', recordList);
     return recordList;
   } catch (e) {
     console.log('Error from getRecordList', e);
