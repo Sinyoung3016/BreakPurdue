@@ -24,7 +24,7 @@ export const getRecordList = async () => {
   }
 };
 
-export const addNewRecord = async (cityTag, date, location, numOfVisit, place, placeTag) => {
+export const addNewRecord = async ({ cityTag, date, location, numOfVisit, place, placeTag }) => {
   const newRecord = await addDoc(collection(firestore, RECORDS), {
     cityTag,
     date,
