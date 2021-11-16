@@ -1,5 +1,5 @@
 import { collection, doc, getDocs, addDoc, deleteDoc } from 'firebase/firestore';
-import { cityNum2Tag, placeNum2Tag } from '../converter/tag';
+import { cityNum2Tag, placeNum2Tag, placeNum2ImgSrc } from '../converter/tag';
 import { firestore } from '../firebaseInit';
 
 const RECORDS = 'records';
@@ -9,10 +9,12 @@ const COMMENT = 'comment';
  * Record 구조
  * number cityTag
  * string date
+ * string address
  * geopoint location : [ 위도 , 경도 ]
  * number numOfVisit
  * string place : 제목
  * number placeTag
+ * ???? images
  * */
 
 export const getRecordList = async () => {
@@ -27,6 +29,7 @@ export const getRecordList = async () => {
         lat: d.data().location[1],
         cityTag: cityNum2Tag(d.data().cityTag),
         placeTag: placeNum2Tag(d.data().placeTag),
+        imageSrc: placeNum2ImgSrc(d.data().placeTag),
       }));
     return recordList;
   } catch (e) {

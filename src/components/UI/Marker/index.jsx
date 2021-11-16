@@ -1,8 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 
+function makeMarker(src, place) {
+  const div = document.createElement('div');
+  div.style.backgroundImage = src;
+  div.style.width = '30px';
+  div.style.height = '40px';
+  div.style.backgroundSize = '100%';
+  div.style.cursor = 'pointer';
+  div.addEventListener('mouseover', () => {});
+
+  return div;
+}
+
 /**
- * marker는 lng와 lat는 필수적으로 가지고 있어야한다
+ * marker는 lng와 lat는 필수적으로 가지고 있어야한다.
+ * marker는 imageSrc, place를 옵셔널로 가질 수 있다.
  */
 function Marker({ map, markers, clickMarker }) {
   const [storedMarkers, setStoredMarkers] = useState([]);
@@ -17,7 +30,9 @@ function Marker({ map, markers, clickMarker }) {
         return !exist;
       })
       .map((marker) => {
-        const newMarker = new mapboxgl.Marker().setLngLat([marker.lng, marker.lat]).addTo(map);
+        const newMarker = new mapboxgl.Marker(marker.imageSrc ? makeMarker(marker.imageSrc, marker.place) : undefined)
+          .setLngLat([marker.lng, marker.lat])
+          .addTo(map);
         newMarker.getElement().addEventListener('click', () => clickMarker(marker));
         return newMarker;
       });
