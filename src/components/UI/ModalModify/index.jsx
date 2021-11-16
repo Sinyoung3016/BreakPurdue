@@ -13,12 +13,12 @@ function Tag({ text, selected, clickTag }) {
 
 function ModalModify({ record, closeModal, submitRecord }) {
   const [info, setInfo] = useState({
-    address: record.address,
+    address: record.address || '',
     place: record.place || '',
     date: record.date || '',
-    visitedNum: record.visitedNum || 1,
+    numOfVisit: record.numOfVisit || 1,
     cityTag: record.cityTag || '',
-    spaceTag: record.spaceTag || '',
+    placeTag: record.placeTag || '',
     images: record.images || [],
     lng: record.lng,
     lat: record.lat,
@@ -33,11 +33,11 @@ function ModalModify({ record, closeModal, submitRecord }) {
   };
 
   const increaseVisitedNum = () => {
-    setInfo({ ...info, visitedNum: info.visitedNum + 1 || 1 });
+    setInfo({ ...info, numOfVisit: info.numOfVisit + 1 || 1 });
   };
 
   const decreaseVisitedNum = () => {
-    setInfo({ ...info, visitedNum: info.visitedNum - 1 || 1 });
+    setInfo({ ...info, numOfVisit: info.numOfVisit - 1 || 1 });
   };
 
   const clickCityTag = (tag) => {
@@ -45,7 +45,7 @@ function ModalModify({ record, closeModal, submitRecord }) {
   };
 
   const clickSpaceTag = (tag) => {
-    setInfo({ ...info, spaceTag: tag });
+    setInfo({ ...info, placeTag: tag });
   };
 
   const uploadImage = (event) => {
@@ -59,6 +59,14 @@ function ModalModify({ record, closeModal, submitRecord }) {
       setInfo({ ...info, images: [...info.images, image] });
     };
     reader.readAsDataURL(file);
+  };
+
+  const handleSubmit = () => {
+    if (!info.place || !info.date || !info.cityTag || !info.placeTag) {
+      alert('정보를 모두 입력하세요');
+      return;
+    }
+    submitRecord(info);
   };
 
   return (
@@ -80,7 +88,7 @@ function ModalModify({ record, closeModal, submitRecord }) {
           <Style.InfoItem>
             <Style.InfoTitle>방문 횟수</Style.InfoTitle>
             <Style.NumberButton onClick={decreaseVisitedNum}>-</Style.NumberButton>
-            <Style.VistedNum>{info.visitedNum}</Style.VistedNum>
+            <Style.VistedNum>{info.numOfVisit}</Style.VistedNum>
             <Style.NumberButton onClick={increaseVisitedNum}>+</Style.NumberButton>
           </Style.InfoItem>
           <Style.InfoItem>
@@ -92,7 +100,7 @@ function ModalModify({ record, closeModal, submitRecord }) {
           <Style.InfoItem>
             <Style.InfoTitle>장소 태그</Style.InfoTitle>
             {spaces.map((space) => (
-              <Tag key={space} text={space} clickTag={() => clickSpaceTag(space)} selected={space === info.spaceTag} />
+              <Tag key={space} text={space} clickTag={() => clickSpaceTag(space)} selected={space === info.placeTag} />
             ))}
           </Style.InfoItem>
           <Style.InfoItem>
@@ -111,7 +119,7 @@ function ModalModify({ record, closeModal, submitRecord }) {
             </Style.ImageList>
           </Style.InfoItem>
         </Style.InfoList>
-        <Style.SubmitButton onClick={() => submitRecord(info)}>☁️✈️☁️</Style.SubmitButton>
+        <Style.SubmitButton onClick={handleSubmit}>☁️✈️☁️</Style.SubmitButton>
         <Style.DiscardButton>우리의 추억 버리기</Style.DiscardButton>
       </Style.Container>
     </ModalLayout>
