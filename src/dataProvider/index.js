@@ -1,4 +1,5 @@
 import { collection, doc, getDocs, addDoc, deleteDoc } from 'firebase/firestore';
+import { cityNum2Tag, placeNum2Tag } from '../converter/tag';
 import { firestore } from '../firebaseInit';
 
 const RECORDS = 'records';
@@ -15,9 +16,18 @@ const COMMENT = 'comment';
  * */
 
 export const getRecordList = async () => {
-  const recordsSnapshot = await getDocs(collection(firestore, RECORDS));
   try {
-    const recordList = recordsSnapshot.docs.map((d) => ({ ...d.data(), id: d.id }));
+    const recordsSnapshot = await getDocs(collection(firestore, RECORDS));
+    const recordList = recordsSnapshot.docs
+      .filter((d) => typeof d.data().location === 'object')
+      .map((d) => ({
+        ...d.data(),
+        id: d.id,
+        lng: d.data().location[0],
+        lat: d.data().location[1],
+        cityTag: cityNum2Tag(d.data().cityTag),
+        placeTag: placeNum2Tag(d.data().placeTag),
+      }));
     return recordList;
   } catch (e) {
     return [];

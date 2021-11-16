@@ -16,13 +16,11 @@ function Marker({ map, markers, clickMarker }) {
         });
         return !exist;
       })
-      .map((marker) =>
-        new mapboxgl.Marker()
-          .setLngLat([marker.lng, marker.lat])
-          .addTo(map)
-          .getElement()
-          .addEventListener('click', () => clickMarker(marker)),
-      );
+      .map((marker) => {
+        const newMarker = new mapboxgl.Marker().setLngLat([marker.lng, marker.lat]).addTo(map);
+        newMarker.getElement().addEventListener('click', () => clickMarker(marker));
+        return newMarker;
+      });
     setStoredMarkers([...storedMarkers, ...newMarkers]);
   };
 

@@ -6,6 +6,7 @@ import Header from '../components/UI/Header';
 import ModalModify from '../components/UI/ModalModify';
 
 import { getRecordList, addNewRecord } from '../dataProvider';
+import { placeTag2Num, cityTag2Num } from '../converter/tag';
 
 // TODO: template도입 고려
 function Main() {
@@ -13,11 +14,16 @@ function Main() {
   const [user, setUser] = useState(undefined);
   const [recordToEdit, setRecordToEdit] = useState(undefined);
   const [selectedRecord, setSelectedRecord] = useState(undefined);
-  const [recordList, setRecordList] = useState([{ lng: -86.89871737888747, lat: 40.41866254968954 }]);
+  const [recordList, setRecordList] = useState([]);
 
   useEffect(() => {
-    getRecordList();
+    getRecordListFromFirebase();
   }, []);
+
+  const getRecordListFromFirebase = async () => {
+    const list = await getRecordList();
+    setRecordList(list);
+  };
 
   const login = (enteredId) => {
     const idList = process.env.ID_LIST.split(' ');
@@ -43,16 +49,17 @@ function Main() {
   };
 
   const submitRecord = (info) => {
+    // FIXME: info의 id값 유무로 생성/수정 판단해야함
     const newRecordId = addNewRecord({
       place: info.place,
       address: info.address,
       location: [info.lng, info.lat],
       date: info.date,
       numOfVisit: info.numOfVisit,
-      cityTag: 1, // info.cityTag,
-      placeTag: 1, // info.placeTag,
+      cityTag: cityTag2Num(info.cityTag),
+      placeTag: placeTag2Num(info.placeTag),
     });
-    // TODO: add to list
+    setRecordList([...recordList, { ...info, id: newRecordId }]);
     setRecordToEdit(undefined);
   };
 
