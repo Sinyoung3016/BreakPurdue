@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as Style from './styled';
+import { CITY, PLACE } from '../../../converter/tag';
 import ModalLayout from '../../Layout/ModalLayout';
-import { cities, spaces } from '../../../common/data';
 
 function Tag({ text, selected, clickTag }) {
   return (
@@ -12,7 +12,9 @@ function Tag({ text, selected, clickTag }) {
 }
 
 function ModalModify({ record, closeModal, submitRecord }) {
+  const [error, setError] = useState('');
   const [info, setInfo] = useState({
+    id: record.id || '',
     address: record.address || '',
     place: record.place || '',
     date: record.date || '',
@@ -63,7 +65,7 @@ function ModalModify({ record, closeModal, submitRecord }) {
 
   const handleSubmit = () => {
     if (!info.place || !info.date || !info.cityTag || !info.placeTag) {
-      alert('정보를 모두 입력하세요');
+      setError('정보를 모두 입력하세요');
       return;
     }
     submitRecord(info);
@@ -93,13 +95,13 @@ function ModalModify({ record, closeModal, submitRecord }) {
           </Style.InfoItem>
           <Style.InfoItem>
             <Style.InfoTitle>도시 태그</Style.InfoTitle>
-            {cities.map((city) => (
+            {CITY.map((city) => (
               <Tag key={city} text={city} clickTag={() => clickCityTag(city)} selected={city === info.cityTag} />
             ))}
           </Style.InfoItem>
           <Style.InfoItem>
             <Style.InfoTitle>장소 태그</Style.InfoTitle>
-            {spaces.map((space) => (
+            {PLACE.map((space) => (
               <Tag key={space} text={space} clickTag={() => clickSpaceTag(space)} selected={space === info.placeTag} />
             ))}
           </Style.InfoItem>
@@ -119,8 +121,9 @@ function ModalModify({ record, closeModal, submitRecord }) {
             </Style.ImageList>
           </Style.InfoItem>
         </Style.InfoList>
+        {error && <Style.Error>{error}</Style.Error>}
         <Style.SubmitButton onClick={handleSubmit}>☁️✈️☁️</Style.SubmitButton>
-        <Style.DiscardButton>우리의 추억 버리기</Style.DiscardButton>
+        {record.id && <Style.DiscardButton>우리의 추억 버리기</Style.DiscardButton>}
       </Style.Container>
     </ModalLayout>
   );
