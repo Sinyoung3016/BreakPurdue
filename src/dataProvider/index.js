@@ -30,6 +30,7 @@ export const getRecordList = async () => {
         cityTag: cityNum2Tag(d.data().cityTag),
         placeTag: placeNum2Tag(d.data().placeTag),
         imageSrc: placeNum2ImgSrc(d.data().placeTag),
+        images: [],
       }));
     return recordList;
   } catch (e) {

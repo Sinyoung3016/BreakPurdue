@@ -4,6 +4,7 @@ import Marker from '../components/UI/Marker';
 import Geocoder from '../components/UI/Geocoder';
 import Header from '../components/UI/Header';
 import ModalModify from '../components/UI/ModalModify';
+import ModalRecord from '../components/UI/ModalRecord';
 
 import { getRecordList, addNewRecord } from '../dataProvider';
 import { placeTag2Num, cityTag2Num, placeTag2ImgSrc } from '../converter/tag';
@@ -44,15 +45,20 @@ function Main() {
     setRecordToEdit(undefined);
   };
 
+  const closeModalRecord = () => {
+    setSelectedRecord(undefined);
+  };
+
   const clickMarker = (marker) => {
     setSelectedRecord(marker);
   };
 
-  const submitRecord = (info) => {
+  const submitRecord = async (info) => {
     // FIXME: info의 id값 유무로 생성/수정 판단해야함
-    const newRecordId = addNewRecord({
+    const newRecordId = await addNewRecord({
       place: info.place,
       address: info.address,
+      images: info.images,
       location: [info.lng, info.lat],
       date: info.date,
       numOfVisit: info.numOfVisit,
@@ -60,12 +66,13 @@ function Main() {
       placeTag: placeTag2Num(info.placeTag),
       imageSrc: placeTag2ImgSrc(info.placeTag),
     });
-    setRecordList([...recordList, { ...info, id: newRecordId }]);
+    setRecordList([...recordList, { ...info, id: newRecordId, imageSrc: placeTag2ImgSrc(info.placeTag) }]);
     setRecordToEdit(undefined);
   };
 
   return (
     <>
+      {selectedRecord && <ModalRecord record={selectedRecord} closeModal={closeModalRecord} />}
       {recordToEdit && <ModalModify record={recordToEdit} closeModal={closeModalModify} submitRecord={submitRecord} />}
       <Header user={user} login={login} />
       <Map getMap={setMap}>
