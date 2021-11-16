@@ -6,7 +6,7 @@ import Header from '../components/UI/Header';
 import ModalModify from '../components/UI/ModalModify';
 
 import { getRecordList, addNewRecord } from '../dataProvider';
-import { placeTag2Num, cityTag2Num } from '../converter/tag';
+import { placeTag2Num, cityTag2Num, placeTag2ImgSrc } from '../converter/tag';
 
 // TODO: template도입 고려
 function Main() {
@@ -58,6 +58,7 @@ function Main() {
       numOfVisit: info.numOfVisit,
       cityTag: cityTag2Num(info.cityTag),
       placeTag: placeTag2Num(info.placeTag),
+      imageSrc: placeTag2ImgSrc(info.placeTag),
     });
     setRecordList([...recordList, { ...info, id: newRecordId }]);
     setRecordToEdit(undefined);
