@@ -6,7 +6,7 @@ import Header from '../components/UI/Header';
 import ModalModify from '../components/UI/ModalModify';
 import ModalRecord from '../components/UI/ModalRecord';
 
-import { getRecordList, addNewRecord } from '../dataProvider';
+import { getRecordList, addNewRecord, deleteRecord } from '../dataProvider';
 import { placeTag2Num, cityTag2Num, placeTag2ImgSrc } from '../converter/tag';
 
 // TODO: template도입 고려
@@ -81,12 +81,26 @@ function Main() {
     }
   };
 
+  const deleteMarker = async (id) => {
+    await deleteRecord(id);
+    const filteredRecords = recordList.filter((record) => record.id !== id);
+    setRecordList(filteredRecords);
+    setRecordToEdit(undefined);
+  };
+
   return (
     <>
       {selectedRecord && (
         <ModalRecord record={selectedRecord} closeModal={closeModalRecord} clickModifyButton={clickModifyButton} />
       )}
-      {recordToEdit && <ModalModify record={recordToEdit} closeModal={closeModalModify} submitRecord={submitRecord} />}
+      {recordToEdit && (
+        <ModalModify
+          record={recordToEdit}
+          closeModal={closeModalModify}
+          submitRecord={submitRecord}
+          deleteMarker={deleteMarker}
+        />
+      )}
       <Header user={user} login={login} />
       <Map getMap={setMap}>
         <Geocoder map={map} clickPlaceMarker={clickPlaceMarker} />

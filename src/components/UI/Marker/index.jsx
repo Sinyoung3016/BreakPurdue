@@ -40,19 +40,22 @@ function Marker({ map, markers, clickMarker }) {
   };
 
   const removeMarker = () => {
-    const removedMarker = storedMarkers.filter((storedMarker) => {
+    const removedMarkerIndex = storedMarkers.findIndex((storedMarker) => {
       const exist = markers.find((marker) => {
         const { lng, lat } = storedMarker.getLngLat();
         return lng === marker.lng && lat === marker.lat;
       });
       return !exist;
-    })[0];
-    removedMarker.remove();
+    });
+    if (removedMarkerIndex >= 0) {
+      storedMarkers[removedMarkerIndex].remove();
+      storedMarkers.splice(removedMarkerIndex, 1);
+      setStoredMarkers(storedMarkers);
+    }
   };
 
   useEffect(() => {
-    if (!map || !markers.length) return;
-
+    if (!map) return;
     if (storedMarkers.length < markers.length) {
       addMarkers();
     } else {
