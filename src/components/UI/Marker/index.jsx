@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 
+/**
+ * marker는 lng와 lat는 필수적으로 가지고 있어야한다
+ */
 function Marker({ map, markers, clickMarker }) {
   const [storedMarkers, setStoredMarkers] = useState([]);
 
@@ -13,13 +16,11 @@ function Marker({ map, markers, clickMarker }) {
         });
         return !exist;
       })
-      .map((marker) =>
-        new mapboxgl.Marker()
-          .setLngLat([marker.lng, marker.lat])
-          .addTo(map)
-          .getElement()
-          .addEventListener('click', clickMarker),
-      );
+      .map((marker) => {
+        const newMarker = new mapboxgl.Marker().setLngLat([marker.lng, marker.lat]).addTo(map);
+        newMarker.getElement().addEventListener('click', () => clickMarker(marker));
+        return newMarker;
+      });
     setStoredMarkers([...storedMarkers, ...newMarkers]);
   };
 
@@ -35,7 +36,7 @@ function Marker({ map, markers, clickMarker }) {
   };
 
   useEffect(() => {
-    if (!map) return;
+    if (!map || !markers.length) return;
 
     if (storedMarkers.length < markers.length) {
       addMarkers();

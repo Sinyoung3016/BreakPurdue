@@ -1,4 +1,5 @@
 import { collection, doc, getDocs, addDoc, deleteDoc } from 'firebase/firestore';
+import { cityNum2Tag, placeNum2Tag } from '../converter/tag';
 import { firestore } from '../firebaseInit';
 
 const RECORDS = 'records';
@@ -12,44 +13,49 @@ const COMMENT = 'comment';
  * number numOfVisit
  * string place : 제목
  * number placeTag
- **/
+ * */
 
 export const getRecordList = async () => {
-  const recordsSnapshot = await getDocs(collection(firestore, RECORDS));
   try {
-    const recordList = recordsSnapshot.docs.map((d) => ({ ...d.data(), id: d.id }));
-    console.log('recordList', recordList);
+    const recordsSnapshot = await getDocs(collection(firestore, RECORDS));
+    const recordList = recordsSnapshot.docs
+      .filter((d) => typeof d.data().location === 'object')
+      .map((d) => ({
+        ...d.data(),
+        id: d.id,
+        lng: d.data().location[0],
+        lat: d.data().location[1],
+        cityTag: cityNum2Tag(d.data().cityTag),
+        placeTag: placeNum2Tag(d.data().placeTag),
+      }));
     return recordList;
   } catch (e) {
-    console.log('Error from getRecordList', e);
+    return [];
   }
 };
 
-export const addNewRecord = async (cityTag, date, location, numOfVisit, place, placeTag) => {
+export const addNewRecord = async ({ cityTag, date, location, numOfVisit, place, placeTag }) => {
   const newRecord = await addDoc(collection(firestore, RECORDS), {
-    cityTag: cityTag,
-    date: date,
-    location: location,
-    numOfVisit: numOfVisit,
-    place: place,
-    placeTag: placeTag,
+    cityTag,
+    date,
+    location,
+    numOfVisit,
+    place,
+    placeTag,
   });
-  console.log('newRecord', newRecord.id);
   return newRecord.id;
 };
 
 export const deleteRecord = async (recordID) => {
   await deleteDoc(doc(firestore, RECORDS, recordID));
-  console.log('deleteRecord', recordID);
 };
 
 export const getComment = async (recordID) => {
   try {
     const commentSnapshot = await getDocs(collection(firestore, RECORDS, recordID, COMMENT));
     const CommentList = commentSnapshot.docs.map((d) => d.data());
-    console.log('CommentList', CommentList);
     return CommentList;
   } catch (e) {
-    console.log('Error from getComment', e);
+    return [];
   }
 };

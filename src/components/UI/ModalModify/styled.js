@@ -129,6 +129,16 @@ export const ImageInput = styled.input`
   display: none;
 `;
 
+export const Error = styled.span`
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  color: red;
+  user-select: none;
+`;
+
 export const SubmitButton = styled.button`
   position: absolute;
   bottom: 2.7rem;

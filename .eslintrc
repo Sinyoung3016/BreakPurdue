@@ -16,11 +16,13 @@
     "react/prop-types": 0,
     "no-unused-vars": 0,
     "import/extensions": 0,
+    "no-use-before-define": 0,
     "react-hooks/exhaustive-deps": 0,
     "react/jsx-filename-extension": 0,
     "import/prefer-default-export": 0,
     "jsx-a11y/label-has-associated-control": 0,
     "jsx-a11y/click-events-have-key-events": 0,
+
     "jsx-a11y/no-noninteractive-element-interactions": 0,
     "react/jsx-props-no-spreading": [1, { "custom": "ignore" }]
   }

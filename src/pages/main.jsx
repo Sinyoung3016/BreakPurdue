@@ -1,18 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Map from '../components/UI/Map';
 import Marker from '../components/UI/Marker';
 import Geocoder from '../components/UI/Geocoder';
 import Header from '../components/UI/Header';
 import ModalModify from '../components/UI/ModalModify';
 
-// TODO: remove
-const dummy = [{ lng: -86.89871737888747, lat: 40.41866254968954 }];
+import { getRecordList, addNewRecord } from '../dataProvider';
+import { placeTag2Num, cityTag2Num } from '../converter/tag';
 
 // TODO: template도입 고려
 function Main() {
   const [map, setMap] = useState(undefined);
   const [user, setUser] = useState(undefined);
-  const [record, setRecord] = useState(undefined);
+  const [recordToEdit, setRecordToEdit] = useState(undefined);
+  const [selectedRecord, setSelectedRecord] = useState(undefined);
+  const [recordList, setRecordList] = useState([]);
+
+  useEffect(() => {
+    getRecordListFromFirebase();
+  }, []);
+
+  const getRecordListFromFirebase = async () => {
+    const list = await getRecordList();
+    setRecordList(list);
+  };
 
   const login = (enteredId) => {
     const idList = process.env.ID_LIST.split(' ');
@@ -26,24 +37,39 @@ function Main() {
   };
 
   const clickPlaceMarker = ({ address, lng, lat }) => {
-    setRecord({ address, lng, lat });
+    setRecordToEdit({ address, lng, lat });
   };
 
   const closeModalModify = () => {
-    setRecord(undefined);
+    setRecordToEdit(undefined);
   };
 
-  const submitRecord = () => {
-    setRecord(undefined);
+  const clickMarker = (marker) => {
+    setSelectedRecord(marker);
+  };
+
+  const submitRecord = (info) => {
+    // FIXME: info의 id값 유무로 생성/수정 판단해야함
+    const newRecordId = addNewRecord({
+      place: info.place,
+      address: info.address,
+      location: [info.lng, info.lat],
+      date: info.date,
+      numOfVisit: info.numOfVisit,
+      cityTag: cityTag2Num(info.cityTag),
+      placeTag: placeTag2Num(info.placeTag),
+    });
+    setRecordList([...recordList, { ...info, id: newRecordId }]);
+    setRecordToEdit(undefined);
   };
 
   return (
     <>
-      {record && <ModalModify record={record} closeModal={closeModalModify} submitRecord={submitRecord} />}
+      {recordToEdit && <ModalModify record={recordToEdit} closeModal={closeModalModify} submitRecord={submitRecord} />}
       <Header user={user} login={login} />
       <Map getMap={setMap}>
         <Geocoder map={map} clickPlaceMarker={clickPlaceMarker} />
-        <Marker map={map} markers={dummy} />
+        <Marker map={map} markers={recordList} clickMarker={clickMarker} />
       </Map>
     </>
   );
