@@ -11,7 +11,7 @@ function ModalRecord({ record, closeModal, clickModifyButton }) {
     <>
       <ModalLayout closeModal={closeModal}>
         <Style.Container>
-          {record.images.length ? <Style.Slider /> : <Style.NoImage>No Images</Style.NoImage>}
+          {record.images && record.images.length ? <Style.Slider /> : <Style.NoImage>No Images</Style.NoImage>}
           <Style.InfoWrapper>
             <Style.Title>{record.place}</Style.Title>
             <Style.TagWrapper>
