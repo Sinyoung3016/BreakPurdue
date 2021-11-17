@@ -58,8 +58,7 @@ function Main() {
     setRecordToEdit(record);
   };
 
-  const submitRecord = async (info) => {
-    // FIXME: info의 id값 유무로 생성/수정 판단해야함
+  const createNewRecord = async (info) => {
     const newRecordId = await addNewRecord({
       place: info.place,
       address: info.address,
@@ -73,6 +72,13 @@ function Main() {
     });
     setRecordList([...recordList, { ...info, id: newRecordId, imageSrc: placeTag2ImgSrc(info.placeTag) }]);
     setRecordToEdit(undefined);
+  };
+
+  const submitRecord = async (info) => {
+    // FIXME: info의 id값 유무로 생성/수정 판단해야함
+    if (!info.id) {
+      createNewRecord(info);
+    }
   };
 
   return (
