@@ -53,6 +53,11 @@ function Main() {
     setSelectedRecord(marker);
   };
 
+  const clickModifyButton = (record) => {
+    setSelectedRecord(undefined);
+    setRecordToEdit(record);
+  };
+
   const submitRecord = async (info) => {
     // FIXME: info의 id값 유무로 생성/수정 판단해야함
     const newRecordId = await addNewRecord({
@@ -72,7 +77,9 @@ function Main() {
 
   return (
     <>
-      {selectedRecord && <ModalRecord record={selectedRecord} closeModal={closeModalRecord} />}
+      {selectedRecord && (
+        <ModalRecord record={selectedRecord} closeModal={closeModalRecord} clickModifyButton={clickModifyButton} />
+      )}
       {recordToEdit && <ModalModify record={recordToEdit} closeModal={closeModalModify} submitRecord={submitRecord} />}
       <Header user={user} login={login} />
       <Map getMap={setMap}>
