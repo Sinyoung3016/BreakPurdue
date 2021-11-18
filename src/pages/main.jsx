@@ -37,7 +37,13 @@ function Main() {
     return true;
   };
 
+  const isExistMarker = ({ lng, lat }) => {
+    const marker = recordList.find((record) => record.lng === lng && record.lat === lat);
+    return marker;
+  };
+
   const clickPlaceMarker = ({ address, lng, lat }) => {
+    if (isExistMarker({ lng, lat })) return;
     setRecordToEdit({ address, lng, lat });
   };
 
