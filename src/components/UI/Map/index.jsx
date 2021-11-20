@@ -22,6 +22,16 @@ function Map({ children, getMap }) {
       zoom: ZOOM,
     });
 
+    map.addControl(
+      new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true,
+        },
+        trackUserLocation: true,
+      }),
+      'bottom-right',
+    );
+
     map.on('load', () => {
       getMap(map);
     });
