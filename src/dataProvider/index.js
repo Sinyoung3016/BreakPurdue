@@ -108,5 +108,11 @@ export const getComment = async (recordID) => {
     console.log('getComment : ', e);
   }
 };
+
+export const deleteComment = async (recordID, commentID) => {
+  try {
+    await deleteDoc(doc(firestore, RECORDS, recordID, COMMENT, commentID));
+  } catch (e) {
+    console.log('deleteComment : ', e);
   }
 };
