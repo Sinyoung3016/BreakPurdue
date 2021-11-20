@@ -51,16 +51,17 @@ export const addNewRecord = async ({ address, cityTag, date, location, numOfVisi
       place,
       placeTag,
     });
-    imgs.map((i) => {
-      const imgId = String(Date.now());
-      const newImg = ref(storage, `${newRecord.id}/${imgId}`);
-      uploadBytes(newImg, i).then(function () {
-        console.log('Uploaded a Img!');
-      });
-    });
+    // imgs.map((i) => {
+    //   const imgId = String(Date.now());
+    //   const newImg = ref(storage, `${newRecord.id}/${imgId}`);
+    //   uploadBytes(newImg, i).then(function () {
+    //     console.log('Uploaded a Img!');
+    //   });
+    // });
     return newRecord.id;
   } catch (e) {
     console.log('addNewRecord :', e);
+    return '';
   }
 };
 
@@ -98,6 +99,7 @@ export const addComment = async (recordID, { auther, desc }) => {
     return newComment.id;
   } catch (e) {
     console.log('addComment : ', e);
+    return '';
   }
 };
 
@@ -109,6 +111,7 @@ export const getComment = async (recordID) => {
     return commentList;
   } catch (e) {
     console.log('getComment : ', e);
+    return [];
   }
 };
 
