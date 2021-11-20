@@ -65,9 +65,10 @@ export const addNewRecord = async ({ address, cityTag, date, location, numOfVisi
   }
 };
 
-// 하위 collection인 comment도 함께 delete
 export const deleteRecord = async (recordID) => {
   try {
+    const commentsSnapshot = await getDocs(collection(firestore, RECORDS, recordID, COMMENT));
+    commentsSnapshot.docs.map((d) => deleteComment(recordID, String(d.id)));
     await deleteDoc(doc(firestore, RECORDS, recordID));
   } catch (e) {
     console.log('deleteRecord : ', e);
