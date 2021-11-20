@@ -84,6 +84,21 @@ export const getAllImage = async (recordID) => {
   return urls;
 };
 
+// ********************************************************************************************** Comment
+
+export const addComment = async (recordID, { auther, desc }) => {
+  try {
+    const newComment = await addDoc(collection(firestore, RECORDS, recordID, COMMENT), {
+      auther,
+      desc,
+    });
+    return newComment.id;
+  } catch (e) {
+    console.log('addComment : ', e);
+  }
+};
+
+// return  list ({string auther, string desc})
 export const getComment = async (recordID) => {
   try {
     const commentSnapshot = await getDocs(collection(firestore, RECORDS, recordID, COMMENT));
