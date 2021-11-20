@@ -38,16 +38,28 @@ export const getRecordList = async () => {
   }
 };
 
-export const addNewRecord = async ({ cityTag, date, location, numOfVisit, place, placeTag }) => {
-  const newRecord = await addDoc(collection(firestore, RECORDS), {
-    cityTag,
-    date,
-    location,
-    numOfVisit,
-    place,
-    placeTag,
-  });
-  return newRecord.id;
+export const addNewRecord = async ({ address, cityTag, date, location, numOfVisit, place, placeTag, imgs }) => {
+  try {
+    const newRecord = await addDoc(collection(firestore, RECORDS), {
+      address,
+      cityTag,
+      date,
+      location,
+      numOfVisit,
+      place,
+      placeTag,
+    });
+    imgs.map((i) => {
+      const imgId = String(Date.now());
+      const newImg = ref(storage, `${newRecord.id}/${imgId}`);
+      uploadBytes(newImg, i).then(function () {
+        console.log('Uploaded a Img!');
+      });
+    });
+    return newRecord.id;
+  } catch (e) {
+    console.log('addNewRecord :', e);
+  }
 };
 
 export const deleteRecord = async (recordID) => {
