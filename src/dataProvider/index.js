@@ -1,12 +1,15 @@
 import { collection, doc, getDocs, addDoc, deleteDoc } from 'firebase/firestore';
+import { uploadBytes, ref, getDownloadURL, listAll } from 'firebase/storage';
 import { cityNum2Tag, placeNum2Tag, placeNum2ImgSrc } from '../converter/tag';
-import { firestore } from '../firebaseInit';
+import { firestore, storage } from '../firebaseInit';
 
 const RECORDS = 'records';
 const COMMENT = 'comment';
 
+// ********************************************************************************************** Record
 /**
- * Record 구조
+ * >> Record 구조<<
+ *
  * number cityTag
  * string date
  * string address
@@ -14,7 +17,7 @@ const COMMENT = 'comment';
  * number numOfVisit
  * string place : 제목
  * number placeTag
- * ???? images
+ * list images
  * */
 
 export const getRecordList = async () => {
