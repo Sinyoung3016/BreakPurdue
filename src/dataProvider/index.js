@@ -70,6 +70,18 @@ export const deleteRecord = async (recordID) => {
     console.log('deleteRecord : ', e);
   }
 };
+
+// ********************************************************************************************** Image
+
+export const getAllImage = async (recordID) => {
+  const li = (await listAll(ref(storage, recordID))).items;
+  const urls = await Promise.all(
+    li.map(async (i) => {
+      const url = await getDownloadURL(ref(storage, i.fullPath));
+      return url;
+    }),
+  );
+  return urls;
 };
 
 export const getComment = async (recordID) => {
