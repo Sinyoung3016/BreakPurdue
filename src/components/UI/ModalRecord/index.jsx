@@ -3,9 +3,10 @@ import ModalLayout from '../../Layout/ModalLayout';
 import MarkerIcon from '../Icon/Marker';
 import CalendarIcon from '../Icon/Calendar';
 import PencilIcon from '../Icon/Pencil';
+import TrashcanIcon from '../Icon/Trashcan';
 import * as Style from './styled';
 
-function ModalRecord({ record, comments, closeModal, clickModifyButton, createComment }) {
+function ModalRecord({ record, user, comments, closeModal, clickModifyButton, createComment, deleteComment }) {
   const [value, setValue] = useState('');
 
   const onSubmitComment = (event) => {
@@ -44,7 +45,14 @@ function ModalRecord({ record, comments, closeModal, clickModifyButton, createCo
             <Style.CommentList>
               {comments.map((comment) => (
                 <Style.CommentItem key={comment.id}>
-                  <Style.CommentHeader>{comment.auther}</Style.CommentHeader>
+                  <Style.CommentHeader>
+                    <Style.CommentAuthor>{comment.auther}</Style.CommentAuthor>
+                    {comment.auther === user && (
+                      <Style.DeleteIcon onClick={() => deleteComment(comment.id)}>
+                        <TrashcanIcon />
+                      </Style.DeleteIcon>
+                    )}
+                  </Style.CommentHeader>
                   <Style.CommentDescription>{comment.desc}</Style.CommentDescription>
                 </Style.CommentItem>
               ))}

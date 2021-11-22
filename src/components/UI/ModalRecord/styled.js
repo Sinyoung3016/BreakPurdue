@@ -81,6 +81,7 @@ export const CommentList = styled.ul`
   padding-bottom: 1.5rem;
   height: 250px;
   overflow: auto;
+  user-select: none;
 `;
 
 export const CommentItem = styled.li`
@@ -93,11 +94,22 @@ export const CommentItem = styled.li`
 `;
 
 export const CommentHeader = styled.header`
+  display: flex;
   font-size: 1.2rem;
+`;
+
+export const CommentAuthor = styled.span``;
+
+export const DeleteIcon = styled.div`
+  margin-left: 3px;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
 `;
 
 export const CommentDescription = styled.p`
   margin: 0;
+  margin-top: 3px;
   font-size: 1.5rem;
 `;
 
