@@ -6,7 +6,7 @@ import Header from '../components/UI/Header';
 import ModalModify from '../components/UI/ModalModify';
 import ModalRecord from '../components/UI/ModalRecord';
 
-import { getRecordList, addNewRecord, deleteRecord, addComment } from '../dataProvider';
+import { getRecordList, addNewRecord, deleteRecord, addComment, getComment } from '../dataProvider';
 import { placeTag2Num, cityTag2Num, placeTag2ImgSrc } from '../converter/tag';
 
 // TODO: template도입 고려
@@ -21,6 +21,12 @@ function Main() {
   useEffect(() => {
     getRecordListFromFirebase();
   }, []);
+
+  useEffect(() => {
+    if (selectedRecord) {
+      getComments();
+    }
+  }, [selectedRecord]);
 
   const getRecordListFromFirebase = async () => {
     const list = await getRecordList();
@@ -101,11 +107,17 @@ function Main() {
     setCommentList([...commentList, { desc, auther: user, id: commentId }]);
   };
 
+  const getComments = async () => {
+    const comments = await getComment(selectedRecord.id);
+    setCommentList(comments);
+  };
+
   return (
     <>
       {selectedRecord && (
         <ModalRecord
           record={selectedRecord}
+          comments={commentList}
           closeModal={closeModalRecord}
           clickModifyButton={clickModifyButton}
           createComment={createComment}

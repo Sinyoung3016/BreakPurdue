@@ -69,6 +69,38 @@ export const InfoText = styled.span`
   font-size: 1.5rem;
 `;
 
+export const CommentTitle = styled.h3`
+  margin-bottom: 0.2rem;
+  font-size: 1.5rem;
+  font-family: 'Comfortaa', cursive;
+`;
+
+export const CommentList = styled.ul`
+  margin: 0;
+  padding: 0;
+  padding-bottom: 1.5rem;
+  height: 250px;
+  overflow: auto;
+`;
+
+export const CommentItem = styled.li`
+  border-bottom: 1px solid #c0c0c0;
+  padding: 0.5rem 0;
+  margin: 0.5rem 0;
+  &:last-child {
+    border: none;
+  }
+`;
+
+export const CommentHeader = styled.header`
+  font-size: 1.2rem;
+`;
+
+export const CommentDescription = styled.p`
+  margin: 0;
+  font-size: 1.5rem;
+`;
+
 export const CommentForm = styled.form`
   display: flex;
   justify-content: space-between;

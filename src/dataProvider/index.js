@@ -106,10 +106,9 @@ export const addComment = async ({ recordID, auther, desc }) => {
 export const getComment = async (recordID) => {
   try {
     const commentSnapshot = await getDocs(collection(firestore, RECORDS, recordID, COMMENT));
-    const commentList = commentSnapshot.docs.map((d) => d.data());
+    const commentList = commentSnapshot.docs.map((d) => ({ ...d.data(), id: d.id }));
     return commentList;
   } catch (e) {
-    console.log('getComment : ', e);
     return [];
   }
 };
