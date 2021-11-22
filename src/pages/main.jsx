@@ -6,7 +6,7 @@ import Header from '../components/UI/Header';
 import ModalModify from '../components/UI/ModalModify';
 import ModalRecord from '../components/UI/ModalRecord';
 
-import { getRecordList, addNewRecord, deleteRecord } from '../dataProvider';
+import { getRecordList, addNewRecord, deleteRecord, addComment } from '../dataProvider';
 import { placeTag2Num, cityTag2Num, placeTag2ImgSrc } from '../converter/tag';
 
 // TODO: template도입 고려
@@ -16,6 +16,7 @@ function Main() {
   const [recordToEdit, setRecordToEdit] = useState(undefined);
   const [selectedRecord, setSelectedRecord] = useState(undefined);
   const [recordList, setRecordList] = useState([]);
+  const [commentList, setCommentList] = useState([]);
 
   useEffect(() => {
     getRecordListFromFirebase();
@@ -94,10 +95,21 @@ function Main() {
     setRecordToEdit(undefined);
   };
 
+  // comment
+  const createComment = async (desc) => {
+    const commentId = await addComment({ desc, recordID: selectedRecord.id, auther: user });
+    setCommentList([...commentList, { desc, auther: user, id: commentId }]);
+  };
+
   return (
     <>
       {selectedRecord && (
-        <ModalRecord record={selectedRecord} closeModal={closeModalRecord} clickModifyButton={clickModifyButton} />
+        <ModalRecord
+          record={selectedRecord}
+          closeModal={closeModalRecord}
+          clickModifyButton={clickModifyButton}
+          createComment={createComment}
+        />
       )}
       {recordToEdit && (
         <ModalModify

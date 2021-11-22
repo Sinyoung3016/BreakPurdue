@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ModalLayout from '../../Layout/ModalLayout';
 import MarkerIcon from '../Icon/Marker';
 import CalendarIcon from '../Icon/Calendar';
 import PencilIcon from '../Icon/Pencil';
-import { getComment } from '../../../dataProvider/index';
 import * as Style from './styled';
 
-function ModalRecord({ record, closeModal, clickModifyButton }) {
+function ModalRecord({ record, closeModal, clickModifyButton, createComment }) {
+  const [value, setValue] = useState('');
+
+  const onSubmitComment = (event) => {
+    event.preventDefault();
+    createComment(value);
+    setValue('');
+  };
+
   return (
     <>
       <ModalLayout closeModal={closeModal}>
@@ -34,6 +41,10 @@ function ModalRecord({ record, closeModal, clickModifyButton }) {
               </Style.InfoText>
             </Style.Info>
           </Style.InfoWrapper>
+          <Style.CommentForm onSubmit={onSubmitComment}>
+            <Style.CommentInput value={value} onChange={(event) => setValue(event.target.value)} />
+            <Style.CommentSendButton>☺️</Style.CommentSendButton>
+          </Style.CommentForm>
         </Style.Container>
       </ModalLayout>
       <Style.ModifyButton onClick={() => clickModifyButton(record)}>
