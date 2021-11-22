@@ -6,7 +6,7 @@ import Header from '../components/UI/Header';
 import ModalModify from '../components/UI/ModalModify';
 import ModalRecord from '../components/UI/ModalRecord';
 
-import { getRecordList, addNewRecord, deleteRecord, addComment, getComment } from '../dataProvider';
+import { getRecordList, addNewRecord, deleteRecord, addComment, getComment, deleteComment } from '../dataProvider';
 import { placeTag2Num, cityTag2Num, placeTag2ImgSrc } from '../converter/tag';
 
 // TODO: template도입 고려
@@ -112,15 +112,23 @@ function Main() {
     setCommentList(comments);
   };
 
+  const deleteCommentFromList = async (commentId) => {
+    const filteredComment = commentList.filter((comment) => comment.id !== commentId);
+    await deleteComment(selectedRecord.id, commentId);
+    setCommentList(filteredComment);
+  };
+
   return (
     <>
       {selectedRecord && (
         <ModalRecord
+          user={user}
           record={selectedRecord}
           comments={commentList}
           closeModal={closeModalRecord}
           clickModifyButton={clickModifyButton}
           createComment={createComment}
+          deleteComment={deleteCommentFromList}
         />
       )}
       {recordToEdit && (

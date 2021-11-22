@@ -102,7 +102,7 @@ export const addComment = async ({ recordID, auther, desc }) => {
   }
 };
 
-// return  list ({string auther, string desc})
+// return  list ({string auther, string desc, string id})
 export const getComment = async (recordID) => {
   try {
     const commentSnapshot = await getDocs(collection(firestore, RECORDS, recordID, COMMENT));
@@ -117,6 +117,6 @@ export const deleteComment = async (recordID, commentID) => {
   try {
     await deleteDoc(doc(firestore, RECORDS, recordID, COMMENT, commentID));
   } catch (e) {
-    console.log('deleteComment : ', e);
+    //
   }
 };
