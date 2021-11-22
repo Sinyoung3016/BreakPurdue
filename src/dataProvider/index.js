@@ -90,7 +90,7 @@ export const getAllImage = async (recordID) => {
 
 // ********************************************************************************************** Comment
 
-export const addComment = async (recordID, { auther, desc }) => {
+export const addComment = async ({ recordID, auther, desc }) => {
   try {
     const newComment = await addDoc(collection(firestore, RECORDS, recordID, COMMENT), {
       auther,
@@ -98,7 +98,6 @@ export const addComment = async (recordID, { auther, desc }) => {
     });
     return newComment.id;
   } catch (e) {
-    console.log('addComment : ', e);
     return '';
   }
 };

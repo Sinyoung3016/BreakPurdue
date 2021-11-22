@@ -9,7 +9,6 @@ export const Container = styled.div`
   box-sizing: border-box;
   background-color: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
 `;
 
 export const Slider = styled.div`
@@ -18,7 +17,7 @@ export const Slider = styled.div`
 `;
 
 export const NoImage = styled.div`
-  width: 64%;
+  width: calc(100% - 315px);
   height: 100%;
   display: flex;
   justify-content: center;
@@ -27,7 +26,7 @@ export const NoImage = styled.div`
 `;
 
 export const InfoWrapper = styled.div`
-  width: 36%;
+  width: 315px;
   padding: 4rem 2rem 0 2rem;
 `;
 
@@ -68,6 +67,38 @@ export const InfoText = styled.span`
   margin: 0;
   color: #555;
   font-size: 1.5rem;
+`;
+
+export const CommentForm = styled.form`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  width: 315px;
+  height: 64px;
+  right: 0;
+  bottom: -80px;
+  padding: 3px 10px;
+
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+`;
+
+export const CommentInput = styled.textarea`
+  width: 230px;
+  font-size: 2rem;
+  border-bottom: 1px solid #555;
+  outline: none;
+  border: none;
+  resize: none;
+`;
+
+export const CommentSendButton = styled.button`
+  background-color: transparent;
+  font-size: 4rem;
+  border: none;
 `;
 
 export const ModifyButton = styled.button`
