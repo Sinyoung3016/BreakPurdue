@@ -5,7 +5,7 @@ import CalendarIcon from '../Icon/Calendar';
 import PencilIcon from '../Icon/Pencil';
 import * as Style from './styled';
 
-function ModalRecord({ record, closeModal, clickModifyButton, createComment }) {
+function ModalRecord({ record, comments, closeModal, clickModifyButton, createComment }) {
   const [value, setValue] = useState('');
 
   const onSubmitComment = (event) => {
@@ -40,6 +40,15 @@ function ModalRecord({ record, closeModal, clickModifyButton, createComment }) {
                 방문 횟수 : {record.numOfVisit}
               </Style.InfoText>
             </Style.Info>
+            <Style.CommentTitle>comment</Style.CommentTitle>
+            <Style.CommentList>
+              {comments.map((comment) => (
+                <Style.CommentItem key={comment.id}>
+                  <Style.CommentHeader>{comment.auther}</Style.CommentHeader>
+                  <Style.CommentDescription>{comment.desc}</Style.CommentDescription>
+                </Style.CommentItem>
+              ))}
+            </Style.CommentList>
           </Style.InfoWrapper>
           <Style.CommentForm onSubmit={onSubmitComment}>
             <Style.CommentInput value={value} onChange={(event) => setValue(event.target.value)} />
