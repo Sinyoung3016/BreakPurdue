@@ -51,13 +51,17 @@ export const addNewRecord = async ({ address, cityTag, date, location, numOfVisi
       place,
       placeTag,
     });
-    // imgs.map((i) => {
-    //   const imgId = String(Date.now());
-    //   const newImg = ref(storage, `${newRecord.id}/${imgId}`);
-    //   uploadBytes(newImg, i).then(function () {
-    //     console.log('Uploaded a Img!');
-    //   });
-    // });
+
+    await Promise.all(
+      imgs.map(async (i) => {
+        const imgId = String(Date.now());
+        const newImg = ref(storage, `${newRecord.id}/${imgId}`);
+        await uploadBytes(newImg, i).then(function () {
+          console.log('Uploaded a Img!');
+        });
+      }),
+    );
+
     return newRecord.id;
   } catch (e) {
     console.log('addNewRecord :', e);
