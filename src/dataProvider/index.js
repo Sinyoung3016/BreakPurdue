@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, addDoc, deleteDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, addDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { uploadBytes, ref, getDownloadURL, listAll } from 'firebase/storage';
 import { cityNum2Tag, placeNum2Tag, placeNum2ImgSrc } from '../converter/tag';
 import { firestore, storage } from '../firebaseInit';
@@ -10,9 +10,9 @@ const COMMENT = 'comment';
 /**
  * >> Record 구조<<
  *
+ * string address
  * number cityTag
  * string date
- * string address
  * geopoint location : [ 위도 , 경도 ]
  * number numOfVisit
  * string place : 제목
@@ -61,6 +61,24 @@ export const addNewRecord = async ({ address, cityTag, date, location, numOfVisi
     return newRecord.id;
   } catch (e) {
     console.log('addNewRecord :', e);
+    return '';
+  }
+};
+
+export const updateRecord = async ({ recordID, address, cityTag, date, location, numOfVisit, place, placeTag }) => {
+  try {
+    await updateDoc(doc(firestore, RECORDS, recordID), {
+      address,
+      cityTag,
+      date,
+      location,
+      numOfVisit,
+      place,
+      placeTag,
+    });
+    return recordID;
+  } catch (e) {
+    console.log('updateRecord :', e);
     return '';
   }
 };
