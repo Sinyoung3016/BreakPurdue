@@ -1,6 +1,6 @@
 import { collection, doc, getDocs, addDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { uploadBytes, ref, getDownloadURL, listAll } from 'firebase/storage';
-import { cityNum2Tag, placeNum2Tag, placeNum2ImgSrc } from '../converter/tag';
+import { cityNum2Tag, placeNum2Tag, placeNum2TagSrc } from '../converter/tag';
 import { firestore, storage } from '../firebaseInit';
 
 const RECORDS = 'records';
@@ -32,7 +32,7 @@ export const getRecordList = async () => {
         lat: d.data().location[1],
         cityTag: cityNum2Tag(d.data().cityTag),
         placeTag: placeNum2Tag(d.data().placeTag),
-        imageSrc: placeNum2ImgSrc(d.data().placeTag),
+        tagSrc: placeNum2TagSrc(d.data().placeTag),
       }));
     return recordList;
   } catch (e) {

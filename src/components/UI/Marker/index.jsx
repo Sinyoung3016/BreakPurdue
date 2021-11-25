@@ -15,7 +15,7 @@ function makeMarker(src, place) {
 
 /**
  * marker는 lng와 lat는 필수적으로 가지고 있어야한다.
- * marker는 imageSrc, place를 옵셔널로 가질 수 있다.
+ * marker는 tagSrc, place를 옵셔널로 가질 수 있다.
  */
 function Marker({ map, markers, clickMarker }) {
   const [storedMarkers, setStoredMarkers] = useState([]);
@@ -30,7 +30,7 @@ function Marker({ map, markers, clickMarker }) {
         return !exist;
       })
       .map((marker) => {
-        const newMarker = new mapboxgl.Marker(marker.imageSrc ? makeMarker(marker.imageSrc, marker.place) : undefined)
+        const newMarker = new mapboxgl.Marker(marker.tagSrc ? makeMarker(marker.tagSrc, marker.place) : undefined)
           .setLngLat([marker.lng, marker.lat])
           .addTo(map);
         newMarker.getElement().addEventListener('click', () => clickMarker(marker));
