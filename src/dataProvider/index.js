@@ -40,7 +40,7 @@ export const getRecordList = async () => {
   }
 };
 
-export const addNewRecord = async ({ address, cityTag, date, location, numOfVisit, place, placeTag, imgs }) => {
+export const addNewRecord = async ({ address, cityTag, date, location, numOfVisit, place, placeTag, images }) => {
   try {
     const newRecord = await addDoc(collection(firestore, RECORDS), {
       address,
@@ -53,18 +53,15 @@ export const addNewRecord = async ({ address, cityTag, date, location, numOfVisi
     });
 
     await Promise.all(
-      imgs.map(async (i) => {
+      images.map(async (i) => {
         const imgId = String(Date.now());
         const newImg = ref(storage, `${newRecord.id}/${imgId}`);
-        await uploadBytes(newImg, i).then(function () {
-          console.log('Uploaded a Img!');
-        });
+        await uploadBytes(newImg, i);
       }),
     );
 
     return newRecord.id;
   } catch (e) {
-    console.log('addNewRecord :', e);
     return '';
   }
 };
