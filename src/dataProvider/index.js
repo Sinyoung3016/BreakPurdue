@@ -96,15 +96,19 @@ export const deleteRecord = async (recordID) => {
 
 // ********************************************************************************************** Image
 
-export const getAllImage = async (recordID) => {
-  const li = (await listAll(ref(storage, recordID))).items;
-  const urls = await Promise.all(
-    li.map(async (i) => {
-      const url = await getDownloadURL(ref(storage, i.fullPath));
-      return url;
-    }),
-  );
-  return urls;
+export const getImagesAPI = async (recordID) => {
+  try {
+    const li = (await listAll(ref(storage, recordID))).items;
+    const urls = await Promise.all(
+      li.map(async (i) => {
+        const url = await getDownloadURL(ref(storage, i.fullPath));
+        return url;
+      }),
+    );
+    return urls;
+  } catch (error) {
+    return [];
+  }
 };
 
 // ********************************************************************************************** Comment

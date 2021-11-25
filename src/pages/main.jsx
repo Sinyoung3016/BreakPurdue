@@ -6,7 +6,15 @@ import Header from '../components/UI/Header';
 import ModalModify from '../components/UI/ModalModify';
 import ModalRecord from '../components/UI/ModalRecord';
 
-import { getRecordList, addNewRecord, deleteRecord, addComment, getComment, deleteComment } from '../dataProvider';
+import {
+  getRecordList,
+  addNewRecord,
+  deleteRecord,
+  addComment,
+  getComment,
+  deleteComment,
+  getImagesAPI,
+} from '../dataProvider';
 import { placeTag2Num, cityTag2Num, placeTag2TagSrc } from '../converter/tag';
 
 // TODO: template도입 고려
@@ -17,6 +25,7 @@ function Main() {
   const [selectedRecord, setSelectedRecord] = useState(undefined);
   const [recordList, setRecordList] = useState([]);
   const [commentList, setCommentList] = useState([]);
+  const [imageList, setImageList] = useState([]);
 
   useEffect(() => {
     getRecordListFromFirebase();
@@ -24,6 +33,7 @@ function Main() {
 
   useEffect(() => {
     if (selectedRecord) {
+      getImages();
       getComments();
     }
   }, [selectedRecord]);
@@ -72,10 +82,11 @@ function Main() {
   };
 
   const createNewRecord = async (info) => {
+    const images = info.images.map((image) => image.file);
     const newRecordId = await addNewRecord({
+      images,
       place: info.place,
       address: info.address,
-      images: info.images,
       location: [info.lng, info.lat],
       date: info.date,
       numOfVisit: info.numOfVisit,
@@ -117,6 +128,12 @@ function Main() {
     setCommentList(filteredComment);
   };
 
+  // image
+  const getImages = async () => {
+    const imagesUrls = await getImagesAPI(selectedRecord.id);
+    setImageList(imagesUrls);
+  };
+
   return (
     <>
       {selectedRecord && (
@@ -124,6 +141,7 @@ function Main() {
           user={user}
           record={selectedRecord}
           comments={commentList}
+          images={imageList}
           closeModal={closeModalRecord}
           clickModifyButton={clickModifyButton}
           createComment={createComment}

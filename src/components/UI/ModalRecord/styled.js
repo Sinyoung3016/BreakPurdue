@@ -12,8 +12,13 @@ export const Container = styled.div`
 `;
 
 export const Slider = styled.div`
-  width: 64%;
+  width: calc(100% - 315px);
   height: 100%;
+
+  div {
+    height: 100%;
+    outline: none;
+  }
 `;
 
 export const NoImage = styled.div`

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Carousel from '../ImageCarousel';
 import ModalLayout from '../../Layout/ModalLayout';
 import MarkerIcon from '../Icon/Marker';
 import CalendarIcon from '../Icon/Calendar';
@@ -6,7 +7,7 @@ import PencilIcon from '../Icon/Pencil';
 import TrashcanIcon from '../Icon/Trashcan';
 import * as Style from './styled';
 
-function ModalRecord({ record, user, comments, closeModal, clickModifyButton, createComment, deleteComment }) {
+function ModalRecord({ record, user, comments, images, closeModal, clickModifyButton, createComment, deleteComment }) {
   const [value, setValue] = useState('');
 
   const onSubmitComment = (event) => {
@@ -19,7 +20,13 @@ function ModalRecord({ record, user, comments, closeModal, clickModifyButton, cr
     <>
       <ModalLayout closeModal={closeModal}>
         <Style.Container>
-          {record.images && record.images.length ? <Style.Slider /> : <Style.NoImage>No Images</Style.NoImage>}
+          {images && images.length ? (
+            <Style.Slider>
+              <Carousel images={images} />
+            </Style.Slider>
+          ) : (
+            <Style.NoImage>No Images</Style.NoImage>
+          )}
           <Style.InfoWrapper>
             <Style.Title>{record.place}</Style.Title>
             <Style.TagWrapper>
