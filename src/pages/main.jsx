@@ -7,7 +7,7 @@ import ModalModify from '../components/UI/ModalModify';
 import ModalRecord from '../components/UI/ModalRecord';
 
 import { getRecordList, addNewRecord, deleteRecord, addComment, getComment, deleteComment } from '../dataProvider';
-import { placeTag2Num, cityTag2Num, placeTag2ImgSrc } from '../converter/tag';
+import { placeTag2Num, cityTag2Num, placeTag2TagSrc } from '../converter/tag';
 
 // TODO: template도입 고려
 function Main() {
@@ -81,9 +81,8 @@ function Main() {
       numOfVisit: info.numOfVisit,
       cityTag: cityTag2Num(info.cityTag),
       placeTag: placeTag2Num(info.placeTag),
-      imageSrc: placeTag2ImgSrc(info.placeTag),
     });
-    setRecordList([...recordList, { ...info, id: newRecordId, imageSrc: placeTag2ImgSrc(info.placeTag) }]);
+    setRecordList([...recordList, { ...info, id: newRecordId, tagSrc: placeTag2TagSrc(info.placeTag) }]);
     setRecordToEdit(undefined);
   };
 

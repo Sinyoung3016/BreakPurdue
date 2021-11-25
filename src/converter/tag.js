@@ -17,7 +17,7 @@ export const placeTag2Num = (tag) => {
   return PLACE.findIndex((place) => place === tag);
 };
 
-export const placeTag2ImgSrc = (tag) => {
+export const placeTag2TagSrc = (tag) => {
   switch (tag) {
     case '음식점':
       return 'url(/images/restaurants.png)';
@@ -38,7 +38,7 @@ export const placeTag2ImgSrc = (tag) => {
   }
 };
 
-export const placeNum2ImgSrc = (num) => {
+export const placeNum2TagSrc = (num) => {
   const tag = placeNum2Tag(num);
   switch (tag) {
     case '음식점':
