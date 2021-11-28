@@ -9,6 +9,7 @@ import ModalRecord from '../components/UI/ModalRecord';
 import {
   getRecordList,
   addNewRecord,
+  updateRecord,
   deleteRecord,
   addComment,
   getComment,
@@ -82,7 +83,7 @@ function Main() {
   };
 
   const createNewRecord = async (info) => {
-    const images = info.images.map((image) => image.file);
+    const images = info.newImages.map((image) => image.file);
     const newRecordId = await addNewRecord({
       images,
       place: info.place,
@@ -97,10 +98,33 @@ function Main() {
     setRecordToEdit(undefined);
   };
 
+  const modifyRecord = async (info) => {
+    const images = info.newImages.map((image) => image.file);
+    await updateRecord({
+      images,
+      recordID: info.id,
+      place: info.place,
+      address: info.address,
+      location: [info.lng, info.lat],
+      numOfVisit: info.numOfVisit,
+      date: info.date,
+      cityTag: cityTag2Num(info.cityTag),
+      placeTag: placeTag2Num(info.placeTag),
+    });
+    const updatedRecordList = recordList.map((record) => {
+      if (record.id !== info.id) return record;
+      return { ...info, tagSrc: placeTag2TagSrc(info.placeTag) };
+    });
+    setRecordList([...updatedRecordList]);
+    setRecordToEdit(undefined);
+  };
+
   const submitRecord = async (info) => {
     // FIXME: info의 id값 유무로 생성/수정 판단해야함
     if (!info.id) {
       createNewRecord(info);
+    } else {
+      modifyRecord(info);
     }
   };
 
@@ -151,6 +175,7 @@ function Main() {
       {recordToEdit && (
         <ModalModify
           record={recordToEdit}
+          images={imageList}
           closeModal={closeModalModify}
           submitRecord={submitRecord}
           deleteMarker={deleteMarker}

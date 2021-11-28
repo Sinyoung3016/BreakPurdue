@@ -11,7 +11,7 @@ function Tag({ text, selected, clickTag }) {
   );
 }
 
-function ModalModify({ record, closeModal, submitRecord, deleteMarker }) {
+function ModalModify({ record, images, closeModal, submitRecord, deleteMarker }) {
   const [error, setError] = useState('');
   const [info, setInfo] = useState({
     id: record.id || '',
@@ -21,7 +21,8 @@ function ModalModify({ record, closeModal, submitRecord, deleteMarker }) {
     numOfVisit: record.numOfVisit || 1,
     cityTag: record.cityTag || '',
     placeTag: record.placeTag || '',
-    images: record.images || [],
+    newImages: [],
+    images: images || [],
     lng: record.lng,
     lat: record.lat,
   });
@@ -58,7 +59,7 @@ function ModalModify({ record, closeModal, submitRecord, deleteMarker }) {
         file,
         preview: reader.result,
       };
-      setInfo({ ...info, images: [...info.images, image] });
+      setInfo({ ...info, newImages: [...info.newImages, image] });
     };
     reader.readAsDataURL(file);
   };
@@ -106,7 +107,7 @@ function ModalModify({ record, closeModal, submitRecord, deleteMarker }) {
             ))}
           </Style.InfoItem>
           <Style.InfoItem>
-            <Style.InfoTitle>사진 ({info.images.length})</Style.InfoTitle>
+            <Style.InfoTitle>사진 ({info.images.length + info.newImages.length})</Style.InfoTitle>
             <Style.Label htmlFor="image-file">이미지 추가하기</Style.Label>
             <Style.ImageInput id="image-file" type="file" onChange={uploadImage} />
           </Style.InfoItem>
@@ -114,6 +115,11 @@ function ModalModify({ record, closeModal, submitRecord, deleteMarker }) {
             <Style.InfoTitle />
             <Style.ImageList>
               {info.images.map((image) => (
+                <Style.ImageWrapper key={image}>
+                  <Style.Image src={image} />
+                </Style.ImageWrapper>
+              ))}
+              {info.newImages.map((image) => (
                 <Style.ImageWrapper key={image.preview}>
                   <Style.Image src={image.preview} />
                 </Style.ImageWrapper>
