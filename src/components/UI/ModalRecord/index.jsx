@@ -65,17 +65,21 @@ function ModalRecord({ record, user, comments, images, closeModal, clickModifyBu
               ))}
             </Style.CommentList>
           </Style.InfoWrapper>
-          <Style.CommentForm onSubmit={onSubmitComment}>
-            <Style.CommentInput value={value} onChange={(event) => setValue(event.target.value)} />
-            <Style.CommentSendButton>☺️</Style.CommentSendButton>
-          </Style.CommentForm>
+          {user && (
+            <Style.CommentForm onSubmit={onSubmitComment}>
+              <Style.CommentInput value={value} onChange={(event) => setValue(event.target.value)} />
+              <Style.CommentSendButton>☺️</Style.CommentSendButton>
+            </Style.CommentForm>
+          )}
         </Style.Container>
       </ModalLayout>
-      <Style.ModifyButton onClick={() => clickModifyButton(record)}>
-        <Style.IconWrapper>
-          <PencilIcon />
-        </Style.IconWrapper>
-      </Style.ModifyButton>
+      {user && (
+        <Style.ModifyButton onClick={() => clickModifyButton(record)}>
+          <Style.IconWrapper>
+            <PencilIcon />
+          </Style.IconWrapper>
+        </Style.ModifyButton>
+      )}
     </>
   );
 }
