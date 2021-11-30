@@ -1,8 +1,13 @@
 import styled from '@emotion/styled';
+import { mq } from '../../../style/mediaQuery';
 
 export const Container = styled.div`
   position: relative;
   height: calc(100% - 8rem);
+
+  ${mq('mobile')} {
+    height: calc(100% - 5rem);
+  }
 `;
 
 export const MapContainer = styled.div`
