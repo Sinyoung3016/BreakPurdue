@@ -100,15 +100,24 @@ function ModalModify({ record, images, closeModal, submitRecord, deleteMarker })
           </Style.InfoItem>
           <Style.InfoItem>
             <Style.InfoTitle>도시 태그</Style.InfoTitle>
-            {CITY.map((city) => (
-              <Tag key={city} text={city} clickTag={() => clickCityTag(city)} selected={city === info.cityTag} />
-            ))}
+            <Style.TagWrapper>
+              {CITY.map((city) => (
+                <Tag key={city} text={city} clickTag={() => clickCityTag(city)} selected={city === info.cityTag} />
+              ))}
+            </Style.TagWrapper>
           </Style.InfoItem>
           <Style.InfoItem>
             <Style.InfoTitle>장소 태그</Style.InfoTitle>
-            {PLACE.map((space) => (
-              <Tag key={space} text={space} clickTag={() => clickSpaceTag(space)} selected={space === info.placeTag} />
-            ))}
+            <Style.TagWrapper>
+              {PLACE.map((space) => (
+                <Tag
+                  key={space}
+                  text={space}
+                  clickTag={() => clickSpaceTag(space)}
+                  selected={space === info.placeTag}
+                />
+              ))}
+            </Style.TagWrapper>
           </Style.InfoItem>
           <Style.InfoItem>
             <Style.InfoTitle>사진 ({info.images.length + info.newImages.length})</Style.InfoTitle>
@@ -116,7 +125,7 @@ function ModalModify({ record, images, closeModal, submitRecord, deleteMarker })
             <Style.ImageInput id="image-file" type="file" onChange={uploadImage} />
           </Style.InfoItem>
           <Style.InfoItem>
-            <Style.InfoTitle />
+            <Style.DummyTitle />
             <Style.ImageList>
               {info.images.map((image) => (
                 <Style.ImageWrapper key={image}>
