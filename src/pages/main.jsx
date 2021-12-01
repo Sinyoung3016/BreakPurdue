@@ -183,7 +183,7 @@ function Main() {
       )}
       <Header user={user} login={login} />
       <Map getMap={setMap}>
-        {user && <Geocoder map={map} clickPlaceMarker={clickPlaceMarker} />}
+        {user && !recordToEdit && !selectedRecord && <Geocoder map={map} clickPlaceMarker={clickPlaceMarker} />}
         <Marker map={map} markers={recordList} clickMarker={clickMarker} />
       </Map>
     </>
