@@ -5,6 +5,7 @@ import MarkerIcon from '../Icon/Marker';
 import CalendarIcon from '../Icon/Calendar';
 import PencilIcon from '../Icon/Pencil';
 import TrashcanIcon from '../Icon/Trashcan';
+import Close from '../Icon/Close';
 import * as Style from './styled';
 
 function ModalRecord({ record, user, comments, images, closeModal, clickModifyButton, createComment, deleteComment }) {
@@ -20,6 +21,9 @@ function ModalRecord({ record, user, comments, images, closeModal, clickModifyBu
     <>
       <ModalLayout closeModal={closeModal}>
         <Style.Container>
+          <Style.CloseIconWrapper>
+            <Close onClick={closeModal} />
+          </Style.CloseIconWrapper>
           {images && images.length ? (
             <Style.Slider>
               <Carousel images={images} />
