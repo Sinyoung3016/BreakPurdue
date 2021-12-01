@@ -21,8 +21,8 @@ function ModalRecord({ record, user, comments, images, closeModal, clickModifyBu
     <>
       <ModalLayout closeModal={closeModal}>
         <Style.Container>
-          <Style.CloseIconWrapper>
-            <Close onClick={closeModal} />
+          <Style.CloseIconWrapper onClick={closeModal}>
+            <Close />
           </Style.CloseIconWrapper>
           {images && images.length ? (
             <Style.Slider>
@@ -53,37 +53,39 @@ function ModalRecord({ record, user, comments, images, closeModal, clickModifyBu
               </Style.InfoText>
             </Style.Info>
             <Style.CommentTitle>comment</Style.CommentTitle>
-            <Style.CommentList>
-              {comments.map((comment) => (
-                <Style.CommentItem key={comment.id}>
-                  <Style.CommentHeader>
-                    <Style.CommentAuthor>{comment.auther}</Style.CommentAuthor>
-                    {comment.auther === user && (
-                      <Style.DeleteIcon onClick={() => deleteComment(comment.id)}>
-                        <TrashcanIcon />
-                      </Style.DeleteIcon>
-                    )}
-                  </Style.CommentHeader>
-                  <Style.CommentDescription>{comment.desc}</Style.CommentDescription>
-                </Style.CommentItem>
-              ))}
-            </Style.CommentList>
+            <Style.CommentWrapper>
+              <Style.CommentList>
+                {comments.map((comment) => (
+                  <Style.CommentItem key={comment.id}>
+                    <Style.CommentHeader>
+                      <Style.CommentAuthor>{comment.auther}</Style.CommentAuthor>
+                      {comment.auther === user && (
+                        <Style.DeleteIcon onClick={() => deleteComment(comment.id)}>
+                          <TrashcanIcon />
+                        </Style.DeleteIcon>
+                      )}
+                    </Style.CommentHeader>
+                    <Style.CommentDescription>{comment.desc}</Style.CommentDescription>
+                  </Style.CommentItem>
+                ))}
+              </Style.CommentList>
+              {user && (
+                <Style.CommentForm onSubmit={onSubmitComment}>
+                  <Style.CommentInput value={value} onChange={(event) => setValue(event.target.value)} />
+                  <Style.CommentSendButton>☺️</Style.CommentSendButton>
+                </Style.CommentForm>
+              )}
+            </Style.CommentWrapper>
           </Style.InfoWrapper>
           {user && (
-            <Style.CommentForm onSubmit={onSubmitComment}>
-              <Style.CommentInput value={value} onChange={(event) => setValue(event.target.value)} />
-              <Style.CommentSendButton>☺️</Style.CommentSendButton>
-            </Style.CommentForm>
+            <Style.ModifyButton onClick={() => clickModifyButton(record)}>
+              <Style.IconWrapper>
+                <PencilIcon />
+              </Style.IconWrapper>
+            </Style.ModifyButton>
           )}
         </Style.Container>
       </ModalLayout>
-      {user && (
-        <Style.ModifyButton onClick={() => clickModifyButton(record)}>
-          <Style.IconWrapper>
-            <PencilIcon />
-          </Style.IconWrapper>
-        </Style.ModifyButton>
-      )}
     </>
   );
 }

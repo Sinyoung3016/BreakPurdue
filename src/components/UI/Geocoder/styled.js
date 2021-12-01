@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { mq } from '../../../style/mediaQuery';
 
 export const Container = styled.form`
   position: absolute;
@@ -10,6 +11,11 @@ export const Container = styled.form`
   z-index: 3000;
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  ${mq('mobile')} {
+    top: 60px;
+    width: calc(100% - 24px);
+  }
 `;
 
 export const Input = styled.input`

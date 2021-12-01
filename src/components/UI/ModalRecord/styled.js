@@ -16,6 +16,7 @@ export const Container = styled.div`
     height: 100vh;
     display: block;
     border-radius: 0;
+    overflow: auto;
   }
 `;
 
@@ -143,6 +144,15 @@ export const CommentItem = styled.li`
   }
 `;
 
+export const CommentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  ${mq('mobile')} {
+    flex-direction: column-reverse;
+  }
+`;
+
 export const CommentHeader = styled.header`
   display: flex;
   font-size: 1.2rem;
@@ -178,6 +188,15 @@ export const CommentForm = styled.form`
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
+
+  ${mq('mobile')} {
+    width: auto;
+    position: relative;
+    bottom: initial;
+    right: initial;
+    box-shadow: initial;
+    padding: 3px 0;
+  }
 `;
 
 export const CommentInput = styled.textarea`
@@ -187,6 +206,12 @@ export const CommentInput = styled.textarea`
   outline: none;
   border: none;
   resize: none;
+
+  ${mq('mobile')} {
+    width: 80%;
+    border: 1px solid #f0f0f0;
+    border-radius: 5px;
+  }
 `;
 
 export const CommentSendButton = styled.button`
@@ -197,8 +222,8 @@ export const CommentSendButton = styled.button`
 
 export const ModifyButton = styled.button`
   position: fixed;
-  bottom: 65px;
-  right: 70px;
+  right: -115px;
+  bottom: -100px;
   width: 100px;
   height: 100px;
   display: flex;
@@ -210,9 +235,23 @@ export const ModifyButton = styled.button`
   background-color: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   z-index: 4000;
+
+  ${mq('mobile')} {
+    position: absolute;
+    top: 15px;
+    right: 50px;
+    width: fit-content;
+    height: fit-content;
+    box-shadow: initial;
+  }
 `;
 
 export const IconWrapper = styled.div`
   width: 40px;
   height: 40px;
+
+  ${mq('mobile')} {
+    width: 24px;
+    height: 24px;
+  }
 `;
