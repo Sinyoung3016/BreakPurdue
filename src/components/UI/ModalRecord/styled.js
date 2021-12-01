@@ -19,6 +19,13 @@ export const Container = styled.div`
   }
 `;
 
+export const CloseIconWrapper = styled.div`
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+`;
+
 export const Slider = styled.div`
   width: calc(100% - 315px);
   height: 100%;
