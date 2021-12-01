@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import * as Style from './styled';
 import { CITY, PLACE } from '../../../converter/tag';
+import Close from '../Icon/Close';
 import ModalLayout from '../../Layout/ModalLayout';
 
 function Tag({ text, selected, clickTag }) {
@@ -75,6 +76,9 @@ function ModalModify({ record, images, closeModal, submitRecord, deleteMarker })
   return (
     <ModalLayout closeModal={closeModal}>
       <Style.Container>
+        <Style.CloseIconWrapper onClick={closeModal}>
+          <Close />
+        </Style.CloseIconWrapper>
         <Style.InfoList>
           <Style.InfoItem>
             <Style.InfoTitle>장소</Style.InfoTitle>

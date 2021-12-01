@@ -11,6 +11,13 @@ export const Container = styled.div`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
+export const CloseIconWrapper = styled.div`
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+`;
+
 export const InfoList = styled.ul`
   margin: 0;
   padding: 0;
