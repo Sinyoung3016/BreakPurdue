@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { mq } from '../../../style/mediaQuery';
 
 export const Container = styled.div`
   position: relative;
@@ -9,6 +10,13 @@ export const Container = styled.div`
   box-sizing: border-box;
   background-color: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  ${mq('mobile')} {
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    border-radius: 0;
+  }
 `;
 
 export const Slider = styled.div`
@@ -19,6 +27,12 @@ export const Slider = styled.div`
     height: 100%;
     outline: none;
   }
+
+  ${mq('mobile')} {
+    padding-top: 75px;
+    width: 100%;
+    height: 400px;
+  }
 `;
 
 export const NoImage = styled.div`
@@ -28,22 +42,42 @@ export const NoImage = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 3rem;
+
+  ${mq('mobile')} {
+    padding-top: 75px;
+    width: 100%;
+    height: 400px;
+  }
 `;
 
 export const InfoWrapper = styled.div`
   width: 315px;
   padding: 4rem 2rem 0 2rem;
+
+  ${mq('mobile')} {
+    width: auto;
+    padding-top: 0;
+  }
 `;
 
 export const Title = styled.h2`
   margin: 0;
   font-size: 2.5rem;
   font-weight: 700;
+
+  ${mq('mobile')} {
+    position: absolute;
+    top: 10px;
+  }
 `;
 
 export const TagWrapper = styled.div`
   margin-top: 1rem;
   display: flex;
+  ${mq('mobile')} {
+    position: absolute;
+    top: 35px;
+  }
 `;
 
 export const Tag = styled.div`
@@ -72,6 +106,10 @@ export const InfoText = styled.span`
   margin: 0;
   color: #555;
   font-size: 1.5rem;
+
+  ${mq('mobile')} {
+    width: 80%;
+  }
 `;
 
 export const CommentTitle = styled.h3`
