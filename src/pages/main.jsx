@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Map from '../components/UI/Map';
-import Marker from '../components/UI/Marker';
+import Marker from '../components/UI/Map/Marker';
 import Geocoder from '../components/UI/Geocoder';
 import Header from '../components/UI/Header';
 import ModalModify from '../components/UI/ModalModify';
@@ -18,7 +18,6 @@ import {
 } from '../dataProvider';
 import { placeTag2Num, cityTag2Num, placeTag2TagSrc } from '../converter/tag';
 
-// TODO: template도입 고려
 function Main() {
   const [map, setMap] = useState(undefined);
   const [user, setUser] = useState(undefined);
@@ -29,8 +28,10 @@ function Main() {
   const [imageList, setImageList] = useState([]);
 
   useEffect(() => {
-    getRecordListFromFirebase();
-  }, []);
+    if (map) {
+      getRecordListFromFirebase();
+    }
+  }, [map]);
 
   useEffect(() => {
     if (selectedRecord) {
@@ -39,9 +40,16 @@ function Main() {
     }
   }, [selectedRecord]);
 
+  const clickMarker = (marker) => {
+    setSelectedRecord(marker);
+  };
+
   const getRecordListFromFirebase = async () => {
     const list = await getRecordList();
-    setRecordList(list);
+    const markers = list.map((item) => {
+      return new Marker({ ...item, map, clickMarker });
+    });
+    setRecordList(markers);
   };
 
   const login = (enteredId) => {
@@ -56,7 +64,9 @@ function Main() {
   };
 
   const isExistMarker = ({ lng, lat }) => {
-    const marker = recordList.find((record) => record.lng === lng && record.lat === lat);
+    const marker = recordList
+      .map((record) => record.getLngLat())
+      .find((record) => record.lng === lng && record.lat === lat);
     return marker;
   };
 
@@ -71,10 +81,6 @@ function Main() {
 
   const closeModalRecord = () => {
     setSelectedRecord(undefined);
-  };
-
-  const clickMarker = (marker) => {
-    setSelectedRecord(marker);
   };
 
   const clickModifyButton = (record) => {
@@ -94,7 +100,15 @@ function Main() {
       cityTag: cityTag2Num(info.cityTag),
       placeTag: placeTag2Num(info.placeTag),
     });
-    setRecordList([...recordList, { ...info, id: newRecordId, tagSrc: placeTag2TagSrc(info.placeTag) }]);
+
+    const newMarker = new Marker({
+      ...info,
+      id: newRecordId,
+      tagSrc: placeTag2TagSrc(info.placeTag),
+      clickMarker,
+      map,
+    });
+    setRecordList([...recordList, newMarker]);
     setRecordToEdit(undefined);
   };
 
@@ -112,25 +126,24 @@ function Main() {
       placeTag: placeTag2Num(info.placeTag),
     });
     const updatedRecordList = recordList.map((record) => {
-      if (record.id !== info.id) return record;
-      return { ...info, tagSrc: placeTag2TagSrc(info.placeTag) };
+      if (record.id === info.id) record.updateMarker({ ...info, tagSrc: placeTag2TagSrc(info.placeTag) });
+      return record;
     });
     setRecordList([...updatedRecordList]);
     setRecordToEdit(undefined);
   };
 
   const submitRecord = async (info) => {
-    // FIXME: info의 id값 유무로 생성/수정 판단해야함
-    if (!info.id) {
-      createNewRecord(info);
-    } else {
-      modifyRecord(info);
-    }
+    if (!info.id) createNewRecord(info);
+    else modifyRecord(info);
   };
 
   const deleteMarker = async (id) => {
     await deleteRecord(id);
-    const filteredRecords = recordList.filter((record) => record.id !== id);
+    const filteredRecords = recordList.filter((record) => {
+      if (record.id === id) record.removeMarker();
+      return record.id !== id;
+    });
     setRecordList(filteredRecords);
     setRecordToEdit(undefined);
   };
@@ -184,7 +197,6 @@ function Main() {
       <Header user={user} login={login} />
       <Map getMap={setMap}>
         {user && !recordToEdit && !selectedRecord && <Geocoder map={map} clickPlaceMarker={clickPlaceMarker} />}
-        <Marker map={map} markers={recordList} clickMarker={clickMarker} />
       </Map>
     </>
   );
