@@ -70,9 +70,9 @@ function Main() {
     return isMarker;
   };
 
-  const clickPlaceMarker = ({ address, lng, lat }) => {
-    if (isExistMarker({ lng, lat })) return;
-    setMarkerToEdit({ address, lng, lat });
+  const clickPlaceMarker = (marker) => {
+    if (isExistMarker(marker.getLngLat())) return;
+    setMarkerToEdit(marker);
   };
 
   const closeModalModify = () => {

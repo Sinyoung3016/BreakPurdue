@@ -19,12 +19,14 @@ function makeMarker(src, place) {
  */
 class Marker extends mapboxgl.Marker {
   constructor({ tagSrc, place, id, lng, lat, map, address, date, numOfVisit, cityTag, placeTag, clickMarker }) {
-    super(tagSrc ? makeMarker(tagSrc, place) : undefined);
+    super(tagSrc ? makeMarker(tagSrc, place) : { color: 'red' });
     this.setLngLat([lng, lat]);
     this.addTo(map);
-    this.getElement().addEventListener('click', () => {
-      this.onClick(clickMarker);
-    });
+    if (clickMarker) {
+      this.getElement().addEventListener('click', () => {
+        this.onClick(clickMarker);
+      });
+    }
 
     this.id = id;
     this.place = place;

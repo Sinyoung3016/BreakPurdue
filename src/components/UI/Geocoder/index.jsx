@@ -1,9 +1,8 @@
-// FIXME: Marker적용해서 만들기 > 마커 커밋 후 작업
 import React, { useState } from 'react';
 import useGoogleAutocomplete from 'react-google-autocomplete/lib/usePlacesAutocompleteService';
 import Overlay from '../../Layout/Overlay';
 import SearchIcon from '../Icon/Search';
-import addressToMarker from './geocoder';
+import generateMarker from './geocoder';
 import * as Style from './styled';
 
 /**
@@ -26,7 +25,7 @@ function Geocoder({ map, clickPlaceMarker }) {
 
   const resetSearchedMarkers = (markers) => {
     markers.forEach((marker) => {
-      marker.marker.remove();
+      marker.remove();
     });
     setSearchedMarkers([]);
   };
@@ -34,10 +33,8 @@ function Geocoder({ map, clickPlaceMarker }) {
   const drawMarkerToMap = (markers) => {
     resetSearchedMarkers(searchedMarkers);
     markers.forEach((marker) => {
-      marker.marker.addTo(map);
-      marker.marker.getElement().addEventListener('click', () => {
-        const lnglat = marker.marker.getLngLat();
-        clickPlaceMarker({ address: marker.address, lng: lnglat.lng, lat: lnglat.lat });
+      marker.getElement().addEventListener('click', () => {
+        clickPlaceMarker(marker);
         resetSearchedMarkers(markers);
       });
     });
@@ -46,17 +43,17 @@ function Geocoder({ map, clickPlaceMarker }) {
 
   const clickPlacePrediction = async (place) => {
     setValue(place.description);
-    const marker = await addressToMarker(place.description, map, true);
+    const marker = await generateMarker(place.description, map, true);
+    drawMarkerToMap([marker]);
     getPlacePredictions({ input: '' });
-    drawMarkerToMap([{ marker, address: place.description }]);
   };
 
   const handleSearch = async (event) => {
     event.preventDefault();
     const markers = await Promise.all(
       placePredictions.map(async (place) => {
-        const marker = await addressToMarker(place.description, map, false);
-        return { marker, address: place.description };
+        const marker = await generateMarker(place.description, map, false);
+        return marker;
       }),
     );
     drawMarkerToMap(markers);
