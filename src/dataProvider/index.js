@@ -106,7 +106,7 @@ export const deleteRecord = async (recordID) => {
     commentsSnapshot.docs.map((d) => deleteComment(recordID, String(d.id)));
     await deleteDoc(doc(firestore, RECORDS, recordID));
   } catch (e) {
-    console.log('deleteRecord : ', e);
+    //
   }
 };
 

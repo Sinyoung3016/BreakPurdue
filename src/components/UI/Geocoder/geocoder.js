@@ -9,6 +9,7 @@ export default async (address, map, flyTo) => {
   const response = await Geocode.fromAddress(address);
   const { lat, lng } = response.results[0].geometry.location;
   const marker = new mapboxgl.Marker({ color: 'red' }).setLngLat({ lng, lat });
+  marker.setDraggable(true);
   if (flyTo) {
     map.flyTo({ center: [lng, lat] });
   }
