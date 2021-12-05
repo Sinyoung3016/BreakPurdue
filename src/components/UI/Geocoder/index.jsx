@@ -30,7 +30,7 @@ function Geocoder({ map, clickPlaceMarker }) {
     setSearchedMarkers([]);
   };
 
-  const drawMarkerToMap = (markers) => {
+  const addEventToMarker = (markers) => {
     resetSearchedMarkers(searchedMarkers);
     markers.forEach((marker) => {
       marker.getElement().addEventListener('click', () => {
@@ -44,7 +44,7 @@ function Geocoder({ map, clickPlaceMarker }) {
   const clickPlacePrediction = async (place) => {
     setValue(place.description);
     const marker = await generateMarker(place.description, map, true);
-    drawMarkerToMap([marker]);
+    addEventToMarker([marker]);
     getPlacePredictions({ input: '' });
   };
 
@@ -56,7 +56,7 @@ function Geocoder({ map, clickPlaceMarker }) {
         return marker;
       }),
     );
-    drawMarkerToMap(markers);
+    addEventToMarker(markers);
     getPlacePredictions({ input: '' });
   };
 
