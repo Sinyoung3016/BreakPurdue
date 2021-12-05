@@ -21,9 +21,9 @@ import { placeTag2Num, cityTag2Num, placeTag2TagSrc } from '../converter/tag';
 function Main() {
   const [map, setMap] = useState(undefined);
   const [user, setUser] = useState(undefined);
-  const [recordToEdit, setRecordToEdit] = useState(undefined);
-  const [selectedRecord, setSelectedRecord] = useState(undefined);
-  const [recordList, setRecordList] = useState([]);
+  const [markerToEdit, setMarkerToEdit] = useState(undefined);
+  const [selectedMarker, setSelectedMarker] = useState(undefined);
+  const [markerList, setMarkerList] = useState([]);
   const [commentList, setCommentList] = useState([]);
   const [imageList, setImageList] = useState([]);
 
@@ -34,14 +34,14 @@ function Main() {
   }, [map]);
 
   useEffect(() => {
-    if (selectedRecord) {
+    if (selectedMarker) {
       getImages();
       getComments();
     }
-  }, [selectedRecord]);
+  }, [selectedMarker]);
 
   const clickMarker = (marker) => {
-    setSelectedRecord(marker);
+    setSelectedMarker(marker);
   };
 
   const getRecordListFromFirebase = async () => {
@@ -49,7 +49,7 @@ function Main() {
     const markers = list.map((item) => {
       return new Marker({ ...item, map, clickMarker });
     });
-    setRecordList(markers);
+    setMarkerList(markers);
   };
 
   const login = (enteredId) => {
@@ -64,33 +64,33 @@ function Main() {
   };
 
   const isExistMarker = ({ lng, lat }) => {
-    const marker = recordList
-      .map((record) => record.getLngLat())
-      .find((record) => record.lng === lng && record.lat === lat);
-    return marker;
+    const isMarker = markerList
+      .map((marker) => marker.getLngLat())
+      .find((marker) => marker.lng === lng && marker.lat === lat);
+    return isMarker;
   };
 
   const clickPlaceMarker = ({ address, lng, lat }) => {
     if (isExistMarker({ lng, lat })) return;
-    setRecordToEdit({ address, lng, lat });
+    setMarkerToEdit({ address, lng, lat });
   };
 
   const closeModalModify = () => {
-    setRecordToEdit(undefined);
+    setMarkerToEdit(undefined);
   };
 
   const closeModalRecord = () => {
-    setSelectedRecord(undefined);
+    setSelectedMarker(undefined);
   };
 
-  const clickModifyButton = (record) => {
-    setSelectedRecord(undefined);
-    setRecordToEdit(record);
+  const clickModifyButton = (marker) => {
+    setSelectedMarker(undefined);
+    setMarkerToEdit(marker);
   };
 
   const createNewRecord = async (info) => {
     const images = info.newImages.map((image) => image.file);
-    const newRecordId = await addNewRecord({
+    const newMarkerId = await addNewRecord({
       images,
       place: info.place,
       address: info.address,
@@ -103,13 +103,13 @@ function Main() {
 
     const newMarker = new Marker({
       ...info,
-      id: newRecordId,
+      id: newMarkerId,
       tagSrc: placeTag2TagSrc(info.placeTag),
       clickMarker,
       map,
     });
-    setRecordList([...recordList, newMarker]);
-    setRecordToEdit(undefined);
+    setMarkerList([...markerList, newMarker]);
+    setMarkerToEdit(undefined);
   };
 
   const modifyRecord = async (info) => {
@@ -125,12 +125,12 @@ function Main() {
       cityTag: cityTag2Num(info.cityTag),
       placeTag: placeTag2Num(info.placeTag),
     });
-    const updatedRecordList = recordList.map((record) => {
-      if (record.id === info.id) record.updateMarker({ ...info, tagSrc: placeTag2TagSrc(info.placeTag) });
-      return record;
+    const updatedMarkerList = markerList.map((marker) => {
+      if (marker.id === info.id) marker.updateMarker({ ...info, tagSrc: placeTag2TagSrc(info.placeTag) });
+      return marker;
     });
-    setRecordList([...updatedRecordList]);
-    setRecordToEdit(undefined);
+    setMarkerList([...updatedMarkerList]);
+    setMarkerToEdit(undefined);
   };
 
   const submitRecord = async (info) => {
@@ -140,43 +140,43 @@ function Main() {
 
   const deleteMarker = async (id) => {
     await deleteRecord(id);
-    const filteredRecords = recordList.filter((record) => {
-      if (record.id === id) record.removeMarker();
-      return record.id !== id;
+    const filteredRecords = markerList.filter((marker) => {
+      if (marker.id === id) marker.removeMarker();
+      return marker.id !== id;
     });
-    setRecordList(filteredRecords);
-    setRecordToEdit(undefined);
+    setMarkerList(filteredRecords);
+    setMarkerToEdit(undefined);
   };
 
   // comment
   const createComment = async (desc) => {
-    const commentId = await addComment({ desc, recordID: selectedRecord.id, auther: user });
+    const commentId = await addComment({ desc, recordID: selectedMarker.id, auther: user });
     setCommentList([...commentList, { desc, auther: user, id: commentId }]);
   };
 
   const getComments = async () => {
-    const comments = await getComment(selectedRecord.id);
+    const comments = await getComment(selectedMarker.id);
     setCommentList(comments);
   };
 
   const deleteCommentFromList = async (commentId) => {
     const filteredComment = commentList.filter((comment) => comment.id !== commentId);
-    await deleteComment(selectedRecord.id, commentId);
+    await deleteComment(selectedMarker.id, commentId);
     setCommentList(filteredComment);
   };
 
   // image
   const getImages = async () => {
-    const imagesUrls = await getImagesAPI(selectedRecord.id);
+    const imagesUrls = await getImagesAPI(selectedMarker.id);
     setImageList(imagesUrls);
   };
 
   return (
     <>
-      {selectedRecord && (
+      {selectedMarker && (
         <ModalRecord
           user={user}
-          record={selectedRecord}
+          record={selectedMarker}
           comments={commentList}
           images={imageList}
           closeModal={closeModalRecord}
@@ -185,9 +185,9 @@ function Main() {
           deleteComment={deleteCommentFromList}
         />
       )}
-      {recordToEdit && (
+      {markerToEdit && (
         <ModalModify
-          record={recordToEdit}
+          record={markerToEdit}
           images={imageList}
           closeModal={closeModalModify}
           submitRecord={submitRecord}
@@ -196,7 +196,7 @@ function Main() {
       )}
       <Header user={user} login={login} />
       <Map getMap={setMap}>
-        {user && !recordToEdit && !selectedRecord && <Geocoder map={map} clickPlaceMarker={clickPlaceMarker} />}
+        {user && !markerToEdit && !selectedMarker && <Geocoder map={map} clickPlaceMarker={clickPlaceMarker} />}
       </Map>
     </>
   );
