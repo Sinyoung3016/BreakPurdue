@@ -24,8 +24,8 @@ function ModalModify({ record, images, closeModal, submitRecord, deleteMarker })
     placeTag: record.placeTag || '',
     newImages: [],
     images: images || [],
-    lng: record.lng,
-    lat: record.lat,
+    lng: record.lng || record.getLngLat().lng,
+    lat: record.lat || record.getLngLat().lat,
   });
 
   const changePlace = (event) => {
