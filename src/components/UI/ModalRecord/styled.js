@@ -11,7 +11,7 @@ export const Container = styled.div`
   background-color: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
-  ${mq('mobile')} {
+  ${mq('sm')} {
     width: 100vw;
     height: 100vh;
     display: block;
@@ -36,7 +36,7 @@ export const Slider = styled.div`
     outline: none;
   }
 
-  ${mq('mobile')} {
+  ${mq('sm')} {
     padding-top: 75px;
     width: 100%;
     height: 400px;
@@ -51,7 +51,7 @@ export const NoImage = styled.div`
   align-items: center;
   font-size: 3rem;
 
-  ${mq('mobile')} {
+  ${mq('sm')} {
     padding-top: 75px;
     width: 100%;
     height: 400px;
@@ -62,7 +62,7 @@ export const InfoWrapper = styled.div`
   width: 315px;
   padding: 4rem 2rem 0 2rem;
 
-  ${mq('mobile')} {
+  ${mq('sm')} {
     width: auto;
     padding-top: 0;
   }
@@ -73,7 +73,7 @@ export const Title = styled.h2`
   font-size: 2.5rem;
   font-weight: 700;
 
-  ${mq('mobile')} {
+  ${mq('sm')} {
     position: absolute;
     top: 10px;
   }
@@ -82,7 +82,7 @@ export const Title = styled.h2`
 export const TagWrapper = styled.div`
   margin-top: 1rem;
   display: flex;
-  ${mq('mobile')} {
+  ${mq('sm')} {
     position: absolute;
     top: 35px;
   }
@@ -115,7 +115,7 @@ export const InfoText = styled.span`
   color: #555;
   font-size: 1.5rem;
 
-  ${mq('mobile')} {
+  ${mq('sm')} {
     width: 80%;
   }
 `;
@@ -148,7 +148,7 @@ export const CommentWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  ${mq('mobile')} {
+  ${mq('sm')} {
     flex-direction: column-reverse;
   }
 `;
@@ -189,7 +189,7 @@ export const CommentForm = styled.form`
   border-radius: 10px;
   overflow: hidden;
 
-  ${mq('mobile')} {
+  ${mq('sm')} {
     width: auto;
     position: relative;
     bottom: initial;
@@ -207,7 +207,7 @@ export const CommentInput = styled.textarea`
   border: none;
   resize: none;
 
-  ${mq('mobile')} {
+  ${mq('sm')} {
     width: 80%;
     border: 1px solid #f0f0f0;
     border-radius: 5px;
@@ -236,7 +236,7 @@ export const ModifyButton = styled.button`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   z-index: 4000;
 
-  ${mq('mobile')} {
+  ${mq('sm')} {
     position: absolute;
     top: 15px;
     right: 50px;
@@ -250,7 +250,7 @@ export const IconWrapper = styled.div`
   width: 40px;
   height: 40px;
 
-  ${mq('mobile')} {
+  ${mq('sm')} {
     width: 24px;
     height: 24px;
   }

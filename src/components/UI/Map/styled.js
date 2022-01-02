@@ -5,7 +5,7 @@ export const Container = styled.div`
   position: relative;
   height: calc(100% - 8rem);
 
-  ${mq('mobile')} {
+  ${mq('sm')} {
     height: calc(100% - 5rem);
   }
 `;
