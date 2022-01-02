@@ -10,7 +10,7 @@ export const Container = styled.header`
   align-items: center;
   user-select: none;
 
-  ${mq('mobile')} {
+  ${mq('sm')} {
     height: 5rem;
   }
 `;
@@ -18,14 +18,14 @@ export const Container = styled.header`
 export const Title = styled.h1`
   font-size: 3rem;
   font-family: 'Comfortaa', cursive;
-  ${mq('mobile')} {
+  ${mq('sm')} {
     font-size: 2.5rem;
   }
 `;
 
 export const Id = styled.h2`
   font-size: 2rem;
-  ${mq('mobile')} {
+  ${mq('sm')} {
     font-size: 2rem;
   }
 `;

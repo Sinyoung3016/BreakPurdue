@@ -11,7 +11,7 @@ export const Container = styled.div`
   background-color: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
-  ${mq('mobile')} {
+  ${mq('sm')} {
     width: 100vw;
     height: 100vh;
     display: block;
@@ -37,7 +37,7 @@ export const InfoItem = styled.li`
   margin-bottom: 20px;
   display: flex;
   align-items: center;
-  ${mq('mobile')} {
+  ${mq('sm')} {
     align-items: flex-start;
   }
 `;
@@ -49,7 +49,7 @@ export const InfoTitle = styled.h3`
   font-size: 2.5rem;
   user-select: none;
 
-  ${mq('mobile')} {
+  ${mq('sm')} {
     width: 19%;
     word-break: keep-all;
     font-size: 1.8rem;
@@ -64,7 +64,7 @@ export const DummyTitle = styled.h3`
   font-size: 2.5rem;
   user-select: none;
 
-  ${mq('mobile')} {
+  ${mq('sm')} {
     display: none;
   }
 `;
@@ -72,7 +72,7 @@ export const DummyTitle = styled.h3`
 export const InfoDescription = styled.span`
   font-size: 1.8rem;
   color: #555;
-  ${mq('mobile')} {
+  ${mq('sm')} {
     width: 80%;
   }
 `;
@@ -84,7 +84,7 @@ export const Input = styled.input`
   border: 1px solid #ccc;
   border-radius: 10px;
   outline: none;
-  ${mq('mobile')} {
+  ${mq('sm')} {
     width: 80%;
   }
 `;
@@ -147,7 +147,7 @@ export const TagWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
-  ${mq('mobile')} {
+  ${mq('sm')} {
     width: 80%;
   }
 `;
@@ -162,7 +162,7 @@ export const Tag = styled.div`
   cursor: pointer;
   user-select: none;
 
-  ${mq('mobile')} {
+  ${mq('sm')} {
     margin-right: 0.6rem;
     margin-bottom: 0.6rem;
   }
@@ -208,7 +208,7 @@ export const SubmitButton = styled.button`
   background-color: transparent;
   user-select: none;
 
-  ${mq('mobile')} {
+  ${mq('sm')} {
     bottom: 4rem;
   }
 `;
@@ -224,7 +224,7 @@ export const DiscardButton = styled.button`
   background-color: transparent;
   user-select: none;
 
-  ${mq('mobile')} {
+  ${mq('sm')} {
     right: 50%;
     transform: translateX(50%);
   }
