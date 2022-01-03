@@ -13,7 +13,8 @@ export const Container = styled.div`
 
   ${mq('sm')} {
     width: 100vw;
-    height: 100vh;
+    height: -webkit-fill-available;
+    max-height: 100vh;
     display: block;
     border-radius: 0;
     overflow: auto;
