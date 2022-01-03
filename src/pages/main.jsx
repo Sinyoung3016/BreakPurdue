@@ -72,6 +72,7 @@ function Main() {
 
   const clickPlaceMarker = (marker) => {
     if (isExistMarker(marker.getLngLat())) return;
+    setImageList([]);
     setMarkerToEdit(marker);
   };
 
