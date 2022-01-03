@@ -12,7 +12,7 @@ function Tag({ text, selected, clickTag }) {
   );
 }
 
-function ModalModify({ record, images, closeModal, submitRecord, deleteMarker }) {
+function ModalModify({ record, images, submittable, closeModal, submitRecord, deleteMarker }) {
   const [error, setError] = useState('');
   const [info, setInfo] = useState({
     id: record.id || '',
@@ -141,6 +141,7 @@ function ModalModify({ record, images, closeModal, submitRecord, deleteMarker })
           </Style.InfoItem>
         </Style.InfoList>
         {error && <Style.Error>{error}</Style.Error>}
+        {!submittable && <Style.Error>제출 중</Style.Error>}
         <Style.SubmitButton onClick={handleSubmit}>☁️✈️☁️</Style.SubmitButton>
         {record.id && (
           <Style.DiscardButton onClick={() => deleteMarker(record.id)}>우리의 추억 버리기</Style.DiscardButton>

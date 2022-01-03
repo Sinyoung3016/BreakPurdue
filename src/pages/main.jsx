@@ -195,6 +195,7 @@ function Main() {
         <ModalModify
           record={markerToEdit}
           images={imageList}
+          submittable={submittable}
           closeModal={closeModalModify}
           submitRecord={submitRecord}
           deleteMarker={deleteMarker}
