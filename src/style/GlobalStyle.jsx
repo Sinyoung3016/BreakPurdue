@@ -7,6 +7,7 @@ function GlobalStyle() {
       styles={css`
         * {
           box-sizing: border-box;
+          font-family: 'Comfortaa', cursive;
         }
         html,
         body,
