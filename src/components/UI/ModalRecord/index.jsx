@@ -29,7 +29,7 @@ function ModalRecord({ record, user, comments, images, closeModal, clickModifyBu
               <Carousel images={images} />
             </Style.Slider>
           ) : (
-            <Style.NoImage>No Images</Style.NoImage>
+            <Style.NoImage>Load Images</Style.NoImage>
           )}
           <Style.InfoWrapper>
             <Style.Title>{record.place}</Style.Title>

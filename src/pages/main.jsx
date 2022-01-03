@@ -82,6 +82,8 @@ function Main() {
   };
 
   const closeModalRecord = () => {
+    setImageList([]);
+    setCommentList([]);
     setSelectedMarker(undefined);
   };
 
