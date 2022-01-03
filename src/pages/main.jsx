@@ -21,6 +21,7 @@ import { placeTag2Num, cityTag2Num, placeTag2TagSrc } from '../converter/tag';
 function Main() {
   const [map, setMap] = useState(undefined);
   const [user, setUser] = useState(undefined);
+  const [submittable, setSubmittable] = useState(true);
   const [markerToEdit, setMarkerToEdit] = useState(undefined);
   const [selectedMarker, setSelectedMarker] = useState(undefined);
   const [markerList, setMarkerList] = useState([]);
@@ -135,8 +136,12 @@ function Main() {
   };
 
   const submitRecord = async (info) => {
-    if (!info.id) createNewRecord(info);
-    else modifyRecord(info);
+    if (!submittable) return;
+
+    setSubmittable(false);
+    if (!info.id) await createNewRecord(info);
+    else await modifyRecord(info);
+    setSubmittable(true);
   };
 
   const deleteMarker = async (id) => {
