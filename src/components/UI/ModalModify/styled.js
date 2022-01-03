@@ -11,9 +11,19 @@ export const Container = styled.div`
   background-color: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
+  ${mq('xl')} {
+    width: 100vw;
+    height: -webkit-fill-available;
+    display: block;
+    padding: 6rem 2rem 10rem 2rem;
+    border-radius: 0;
+    overflow: auto;
+  }
+
   ${mq('sm')} {
     width: 100vw;
-    height: 100vh;
+    height: -webkit-fill-available;
+    max-height: 100vh;
     display: block;
     padding: 6rem 2rem 10rem 2rem;
     border-radius: 0;
@@ -207,9 +217,10 @@ export const SubmitButton = styled.button`
   border: none;
   background-color: transparent;
   user-select: none;
+  width: fit-content;
 
   ${mq('sm')} {
-    bottom: 4rem;
+    bottom: 1rem;
   }
 `;
 
