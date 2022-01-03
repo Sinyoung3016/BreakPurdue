@@ -22,8 +22,8 @@ function PrevArrow({ onClick }) {
 
 function ImageSlider({ images }) {
   const settings = {
-    arrow: true,
-    lazyLoad: true,
+    fade: true,
+    lazyLoad: 'progressive',
     infinite: true,
     slidesToShow: 1,
     nextArrow: <NextArrow />,
@@ -33,7 +33,7 @@ function ImageSlider({ images }) {
   return (
     <Slider {...settings}>
       {images.map((image) => (
-        <Style.ImgWrapper key={image} id="dfdf">
+        <Style.ImgWrapper key={image}>
           <Style.Image src={image} />
         </Style.ImgWrapper>
       ))}
