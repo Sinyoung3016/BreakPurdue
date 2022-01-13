@@ -1,7 +1,11 @@
 # 🦁BreakPurdue
 ![image](https://user-images.githubusercontent.com/53924962/140311465-e4898909-3864-4733-980f-8b23183b9ce3.png)
 
-#### >>> [Try it now!](https://breakpurdue.web.app) <<<
+<div align=center> 
+  
+  #### >>> [Try it now!](https://breakpurdue.web.app) <<< 
+
+</div>
 
 ## 🗺 프로젝트 소개
 
