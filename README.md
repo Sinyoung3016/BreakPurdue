@@ -27,6 +27,6 @@
 ## 🔖 DOCS
 
 <p align="center">
-  <a href="https://docs.google.com/spreadsheets/d/1jutvO4UI1FIqw39lbFOulHnQZC5SEKuI2kaVR2JlsCI/edit#gid=0">📋 Feature List </a>&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp; 
-  <a href="https://www.figma.com/file/G5YUO4AVS006vIAFZ0oh4c/BreakPurdue?node-id=0%3A1"> 🎨UI </a>
+  <a href="https://docs.google.com/spreadsheets/d/1jutvO4UI1FIqw39lbFOulHnQZC5SEKuI2kaVR2JlsCI/edit#gid=0">📋 Feature List </a>&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://www.figma.com/file/G5YUO4AVS006vIAFZ0oh4c/BreakPurdue?node-id=0%3A1"> 🎨 UI </a>
 </p>
